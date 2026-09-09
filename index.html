@@ -1,0 +1,1192 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1, user-scalable=no">
+<script src="https://telegram.org/js/telegram-web-app.js"></script>
+<title>Eshonguzar M34 — Ho'jalik va qurilish mollari</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@500;600;700&family=Work+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#F2F4F1;
+    --surface:#FFFFFF;
+    --ink:#1C2420;
+    --ink-soft:#4B564F;
+    --teal:#1F4B49;
+    --teal-light:#2F6B66;
+    --teal-wash:#E4ECEA;
+    --amber:#D9A441;
+    --amber-dark:#B9832B;
+    --amber-wash:#FBF0DA;
+    --sage:#90A99E;
+    --brick:#B14B3A;
+    --line:#DDE4DF;
+    --radius-card:14px;
+    --radius-pill:999px;
+    --shadow-card: 0 1px 2px rgba(28,36,32,0.06), 0 1px 1px rgba(28,36,32,0.04);
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{
+    background:#DCE2DC;
+    font-family:'Work Sans',sans-serif;
+    color:var(--ink);
+    -webkit-font-smoothing:antialiased;
+    min-height:100vh;
+    display:flex;
+    justify-content:center;
+  }
+  h1,h2,h3,.headline{
+    font-family:'Roboto Slab',serif;
+    margin:0;
+    color:var(--ink);
+    letter-spacing:-0.01em;
+  }
+  .phone{
+    width:100%;
+    max-width:430px;
+    min-height:100vh;
+    background:var(--bg);
+    position:relative;
+    display:flex;
+    flex-direction:column;
+    box-shadow:0 0 40px rgba(0,0,0,0.12);
+  }
+  @media(min-width:431px){
+    body{padding:28px 0;}
+    .phone{min-height:844px; border-radius:28px; overflow:hidden; box-shadow:0 20px 60px rgba(28,36,32,0.25);}
+  }
+
+  /* ---------- Top bar ---------- */
+  .topbar{
+    position:sticky; top:0; z-index:20;
+    display:flex; align-items:center; gap:10px;
+    padding:14px 16px;
+    background:var(--teal);
+    color:#fff;
+  }
+  .logo-mark{
+    width:38px;height:38px;border-radius:10px;
+    background:var(--amber);
+    display:flex;align-items:center;justify-content:center;
+    font-family:'Roboto Slab',serif;
+    font-weight:700;font-size:13px;color:var(--teal);
+    flex-shrink:0;
+  }
+  .brand{flex:1; min-width:0;}
+  .brand .name{font-family:'Roboto Slab',serif; font-weight:600; font-size:16.5px; line-height:1.15;}
+  .brand .sub{font-size:11.5px; color:#CFE0DC; margin-top:1px;}
+  .cart-btn{
+    position:relative;
+    width:38px;height:38px;border-radius:var(--radius-pill);
+    background:rgba(255,255,255,0.12);
+    border:none; display:flex;align-items:center;justify-content:center;
+    color:#fff; cursor:pointer;
+  }
+  .cart-btn svg{width:19px;height:19px;}
+  .cart-badge{
+    position:absolute; top:-4px; right:-4px;
+    background:var(--amber); color:var(--teal);
+    font-size:10.5px; font-weight:700;
+    min-width:17px; height:17px; border-radius:999px;
+    display:flex;align-items:center;justify-content:center;
+    padding:0 3px;
+  }
+
+  /* ---------- Views ---------- */
+  main{flex:1; overflow-y:auto; padding-bottom:92px;}
+  .view{display:none; padding:18px 16px 8px;}
+  .view.active{display:block;}
+
+  /* ---------- Hero ---------- */
+  .hero{
+    background:var(--teal);
+    border-radius:16px;
+    padding:22px 18px 88px;
+    position:relative;
+    overflow:hidden;
+    color:#fff;
+    margin-bottom:18px;
+  }
+  .hero h1{color:#fff; font-size:22px; line-height:1.28; max-width:78%;}
+  .hero p{font-size:13px; color:#CFE0DC; margin:10px 0 16px; max-width:80%; line-height:1.5;}
+  .hero-cta{
+    background:var(--amber); color:var(--teal);
+    border:none; border-radius:var(--radius-pill);
+    font-family:'Work Sans',sans-serif; font-weight:600; font-size:13.5px;
+    padding:10px 18px; cursor:pointer;
+  }
+  .hero-art{position:absolute; right:-8px; bottom:-6px; width:160px; opacity:0.95;}
+
+  /* ---------- Section headings ---------- */
+  .section-head{display:flex; align-items:baseline; justify-content:space-between; margin:4px 0 12px;}
+  .section-head h2{font-size:16.5px;}
+  .section-head .link{font-size:12.5px; color:var(--teal); font-weight:600; background:none; border:none; cursor:pointer; padding:0;}
+
+  /* ---------- Category chips ---------- */
+  .chip-row{display:flex; gap:8px; overflow-x:auto; padding-bottom:4px; margin-bottom:14px; scrollbar-width:none;}
+  .chip-row::-webkit-scrollbar{display:none;}
+  .chip{
+    flex-shrink:0;
+    padding:8px 14px; border-radius:var(--radius-pill);
+    background:var(--surface); border:1px solid var(--line);
+    font-size:12.5px; font-weight:500; color:var(--ink-soft);
+    cursor:pointer; white-space:nowrap;
+  }
+  .chip.active{background:var(--teal); border-color:var(--teal); color:#fff;}
+
+  /* ---------- Categories list (Toifalar screen) ---------- */
+  .cat-list{display:flex; flex-direction:column; gap:8px;}
+  .cat-item{
+    display:flex; align-items:center; gap:12px;
+    background:var(--surface); border:1px solid var(--line);
+    border-radius:var(--radius-card); padding:12px 14px;
+    cursor:pointer; box-shadow:var(--shadow-card);
+  }
+  .cat-item .icon-wrap{
+    width:38px; height:38px; flex-shrink:0;
+    display:flex; align-items:center; justify-content:center;
+    background:var(--teal-wash); border-radius:10px; color:var(--teal);
+  }
+  .cat-item .icon-wrap svg{width:20px; height:20px;}
+  .cat-item .cat-name{flex:1; font-size:14px; font-weight:600; color:var(--ink);}
+  .cat-item .chev{color:var(--ink-soft); flex-shrink:0;}
+  .cat-item.all-item .icon-wrap{background:var(--amber-wash); color:var(--amber-dark);}
+
+  /* ---------- Catalog back-header ---------- */
+  .catalog-header{display:flex; align-items:center; gap:10px; margin-bottom:14px;}
+  .catalog-header h2{font-size:16.5px;}
+  .back-btn{
+    width:34px; height:34px; flex-shrink:0;
+    display:flex; align-items:center; justify-content:center;
+    background:var(--surface); border:1px solid var(--line);
+    border-radius:10px; color:var(--ink); cursor:pointer;
+  }
+
+  /* ---------- Featured horizontal scroll ---------- */
+  .feat-row{display:flex; gap:12px; overflow-x:auto; padding-bottom:6px; margin-bottom:6px; scrollbar-width:none;}
+  .feat-row::-webkit-scrollbar{display:none;}
+  .feat-card{
+    flex-shrink:0; width:132px;
+    background:var(--surface); border-radius:var(--radius-card);
+    box-shadow:var(--shadow-card); border:1px solid var(--line);
+    padding:12px; display:flex; flex-direction:column; gap:8px;
+  }
+  .feat-card .icon-wrap{width:100%; height:56px; border-radius:10px; background:var(--teal-wash); display:flex; align-items:center; justify-content:center;}
+  .feat-card .icon-wrap svg{width:28px;height:28px; color:var(--teal);}
+  .feat-card .pname{font-size:12.5px; font-weight:600; line-height:1.3;}
+  .feat-card .pprice{font-size:12.5px; color:var(--amber-dark); font-weight:700;}
+  .mini-add{
+    align-self:flex-start;
+    background:var(--teal-wash); color:var(--teal);
+    border:none; border-radius:var(--radius-pill);
+    font-size:11.5px; font-weight:600; padding:5px 10px; cursor:pointer;
+  }
+
+  /* ---------- Search ---------- */
+  .search-wrap{position:relative; margin-bottom:14px;}
+  .search-wrap svg{position:absolute; left:12px; top:50%; transform:translateY(-50%); width:16px;height:16px; color:var(--sage);}
+  .search-wrap input{
+    width:100%; padding:11px 12px 11px 36px;
+    border-radius:var(--radius-pill); border:1px solid var(--line);
+    background:var(--surface); font-family:'Work Sans',sans-serif; font-size:13.5px; color:var(--ink);
+  }
+  .search-wrap input:focus{outline:2px solid var(--teal-light); outline-offset:1px;}
+
+  /* ---------- Product grid ---------- */
+  .grid{display:grid; grid-template-columns:1fr 1fr; gap:12px;}
+  .card{
+    background:var(--surface); border-radius:var(--radius-card);
+    border:1px solid var(--line); box-shadow:var(--shadow-card);
+    padding:12px; display:flex; flex-direction:column; gap:8px;
+  }
+  .card .icon-wrap{width:100%; height:64px; border-radius:10px; background:var(--teal-wash); display:flex; align-items:center; justify-content:center;}
+  .card .icon-wrap svg{width:30px;height:30px; color:var(--teal);}
+  .card .pname{font-size:13px; font-weight:600; line-height:1.32; min-height:34px;}
+  .card .pcat{font-size:11px; color:var(--sage);}
+  .card .pprice{font-size:13.5px; color:var(--amber-dark); font-weight:700;}
+  .add-btn{
+    background:var(--teal); color:#fff; border:none; border-radius:var(--radius-pill);
+    font-size:12.5px; font-weight:600; padding:8px 0; cursor:pointer; width:100%;
+  }
+  .out-of-stock{
+    background:var(--line); color:var(--ink-soft);
+    border-radius:var(--radius-pill); font-size:12px; font-weight:700;
+    text-align:center; padding:8px 0;
+  }
+  .stepper{
+    display:flex; align-items:center; justify-content:space-between;
+    background:var(--teal); border-radius:var(--radius-pill); padding:4px 6px;
+  }
+  .stepper button{
+    width:22px;height:22px; border-radius:50%; border:none; background:rgba(255,255,255,0.18);
+    color:#fff; font-size:14px; display:flex;align-items:center;justify-content:center; cursor:pointer;
+  }
+  .stepper span{color:#fff; font-size:12.5px; font-weight:600;}
+
+  .empty-note{text-align:center; padding:30px 10px; color:var(--ink-soft); font-size:13px;}
+  .subcat-heading{
+    font-family:'Roboto Slab',serif; font-weight:600; font-size:14.5px; color:var(--teal);
+    margin:18px 0 10px; padding-bottom:6px; border-bottom:1px solid var(--line);
+  }
+  .subcat-heading:first-child{margin-top:2px;}
+  .subcat-empty{padding:14px 4px; text-align:left; font-size:12px; font-style:italic; margin-bottom:4px;}
+
+  /* ---------- Cart view ---------- */
+  .cart-row{
+    display:flex; align-items:center; gap:10px;
+    background:var(--surface); border:1px solid var(--line); border-radius:var(--radius-card);
+    padding:10px; margin-bottom:10px;
+  }
+  .cart-row .icon-wrap{width:46px;height:46px; border-radius:9px; background:var(--teal-wash); display:flex; align-items:center; justify-content:center; flex-shrink:0;}
+  .cart-row .icon-wrap svg{width:22px;height:22px; color:var(--teal);}
+  .cart-row .info{flex:1; min-width:0;}
+  .cart-row .pname{font-size:13px; font-weight:600;}
+  .cart-row .pprice{font-size:12px; color:var(--ink-soft); margin-top:2px;}
+  .cart-row .stepper{flex-shrink:0; padding:3px 5px;}
+  .cart-row .remove{
+    background:none; border:none; color:var(--brick); font-size:11.5px; font-weight:600; cursor:pointer; padding:0; margin-left:4px;
+  }
+
+  .totals{
+    background:var(--surface); border:1px solid var(--line); border-radius:var(--radius-card);
+    padding:14px; margin:14px 0; display:flex; justify-content:space-between; align-items:center;
+  }
+  .totals .label{font-size:13px; color:var(--ink-soft);}
+  .totals .value{font-family:'Roboto Slab',serif; font-size:18px; font-weight:600; color:var(--teal);}
+
+  .form-block label{display:block; font-size:12.5px; font-weight:600; color:var(--ink-soft); margin:12px 0 6px;}
+  .form-block input, .form-block textarea{
+    width:100%; padding:11px 12px; border-radius:10px; border:1px solid var(--line);
+    background:var(--surface); font-family:'Work Sans',sans-serif; font-size:13.5px; color:var(--ink); resize:vertical;
+  }
+  .form-block input:focus, .form-block textarea:focus{outline:2px solid var(--teal-light); outline-offset:1px;}
+
+  .method-row{display:flex; gap:8px;}
+  .method-btn{
+    flex:1; padding:11px 8px; border-radius:10px;
+    border:1px solid var(--line); background:var(--surface);
+    font-family:'Work Sans',sans-serif; font-size:13px; font-weight:600; color:var(--ink-soft);
+    display:flex; align-items:center; justify-content:center; gap:6px;
+  }
+  .method-btn svg{width:16px; height:16px;}
+  .method-btn.active{background:var(--teal-wash); border-color:var(--teal); color:var(--teal);}
+  .field-hint{font-size:11.5px; color:var(--ink-soft); margin-top:4px;}
+  .location-btn{
+    width:100%; margin-top:6px; padding:10px; border-radius:10px;
+    border:1px dashed var(--teal-light); background:var(--teal-wash);
+    color:var(--teal); font-family:'Work Sans',sans-serif; font-size:12.5px; font-weight:600;
+    display:flex; align-items:center; justify-content:center; gap:6px;
+  }
+  .location-btn svg{width:16px; height:16px;}
+  .location-btn.confirmed{background:var(--amber-wash); border-color:var(--amber); color:var(--amber-dark);}
+
+  .order-btn{
+    width:100%; margin-top:16px;
+    background:var(--amber); color:var(--teal);
+    border:none; border-radius:var(--radius-pill);
+    font-family:'Work Sans',sans-serif; font-weight:700; font-size:14.5px;
+    padding:13px 0; cursor:pointer;
+    display:flex; align-items:center; justify-content:center; gap:8px;
+  }
+  .order-btn svg{width:17px;height:17px;}
+  .copy-btn{
+    width:100%; margin-top:8px; background:none; border:none;
+    color:var(--teal); font-size:12.5px; font-weight:600; text-decoration:underline;
+    cursor:pointer; padding:8px 0;
+  }
+  .form-note{font-size:11.5px; color:var(--sage); margin-top:6px; line-height:1.5;}
+  .toast{
+    position:fixed; bottom:100px; left:50%; transform:translateX(-50%) translateY(20px);
+    background:var(--ink); color:#fff; font-size:12.5px; padding:9px 16px; border-radius:var(--radius-pill);
+    opacity:0; pointer-events:none; transition:all 0.25s ease; z-index:50; white-space:nowrap;
+  }
+  .toast.show{opacity:1; transform:translateX(-50%) translateY(0);}
+
+  .footer-contact{
+    text-align:center; font-size:12px; color:var(--ink-soft); padding:18px 10px 6px;
+  }
+  .footer-contact a{color:var(--teal); font-weight:600; text-decoration:none;}
+
+  /* ---------- Bottom tab bar ---------- */
+  .tabbar{
+    position:sticky; bottom:0; z-index:20;
+    display:flex;
+    background:var(--surface);
+    border-top:1px solid var(--line);
+    padding:8px 6px calc(8px + env(safe-area-inset-bottom));
+  }
+  .tab{
+    flex:1; display:flex; flex-direction:column; align-items:center; gap:3px;
+    background:none; border:none; cursor:pointer; padding:6px 0; color:var(--sage);
+  }
+  .tab svg{width:21px;height:21px;}
+  .tab span{font-size:10.5px; font-weight:600;}
+  .tab.active{color:var(--teal);}
+  .tab .tab-badge{
+    position:absolute; margin-left:14px; margin-top:-4px;
+    background:var(--amber); color:var(--teal); font-size:9.5px; font-weight:700;
+    min-width:15px; height:15px; border-radius:999px; display:flex; align-items:center; justify-content:center; padding:0 3px;
+  }
+  .tab-icon-wrap{position:relative;}
+
+  /* ---------- Telegram Mini App mode ---------- */
+  body.tg-app .order-btn,
+  body.tg-app .copy-btn{display:none;}
+  body.tg-app .form-note{margin-bottom:8px;}
+</style>
+</head>
+<body>
+
+<div class="phone">
+
+  <header class="topbar">
+    <div class="logo-mark">EM</div>
+    <div class="brand">
+      <div class="name">Eshonguzar M34</div>
+      <div class="sub">Ho'jalik va qurilish mollari</div>
+    </div>
+    <button class="cart-btn" onclick="showView('cart')" aria-label="Savat">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="21" r="1"></circle><circle cx="20" cy="21" r="1"></circle><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path></svg>
+      <span class="cart-badge" id="topCartBadge" style="display:none;">0</span>
+    </button>
+  </header>
+
+  <main>
+
+    <!-- HOME VIEW -->
+    <section class="view active" id="view-home">
+      <div class="hero">
+        <h1>Uy va qurilish uchun kerak bo'lgan narsa — bir joyda.</h1>
+        <p>Eshonguzar M34 — mahalladagi ishonchli ho'jalik va qurilish mollari do'koni endi telefoningizda. Tanlang, savatga soling, Telegram orqali buyurtma bering.</p>
+        <button class="hero-cta" onclick="showView('categories')">Toifalarni ko'rish</button>
+        <svg class="hero-art" viewBox="0 0 160 140" fill="none">
+          <g stroke="#D9A441" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" opacity="0.9">
+            <path d="M20 130 L20 60 Q20 50 30 50 L44 50 Q54 50 54 60 L54 130"/>
+            <path d="M20 78 L54 78"/>
+            <path d="M100 130 L100 40"/>
+            <path d="M84 40 Q100 20 116 40"/>
+            <path d="M78 130 L122 130"/>
+            <circle cx="140" cy="70" r="16"/>
+            <path d="M140 54 L140 44"/>
+          </g>
+        </svg>
+      </div>
+
+      <div class="section-head">
+        <h2>Toifalar</h2>
+      </div>
+      <div class="chip-row" id="homeCategoryChips"></div>
+
+      <div class="section-head">
+        <h2>Ko'p sotiladigan mahsulotlar</h2>
+        <button class="link" onclick="openCatalogWithCategory('all')">Barchasi</button>
+      </div>
+      <div class="feat-row" id="featuredRow"></div>
+
+      <div class="footer-contact">
+        Savollaringiz bo'lsa: <a href="https://t.me/AbdukarimxonAbduxakimovich" onclick="openTelegramChat(); return false;">Bog'lanish</a>
+      </div>
+    </section>
+
+    <!-- CATEGORIES VIEW (list) -->
+    <section class="view" id="view-categories">
+      <div class="section-head"><h2>Toifalar</h2></div>
+      <div class="cat-list" id="categoriesList"></div>
+    </section>
+
+    <!-- CATALOG VIEW (products in a category) -->
+    <section class="view" id="view-catalog">
+      <div class="catalog-header">
+        <button class="back-btn" onclick="showView('categories')" aria-label="Orqaga">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"></path></svg>
+        </button>
+        <h2 id="catalogTitle">Barchasi</h2>
+      </div>
+      <div class="search-wrap">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><path d="M21 21l-4.35-4.35"></path></svg>
+        <input type="text" id="searchInput" placeholder="Mahsulot qidirish..." oninput="renderCatalog()">
+      </div>
+      <div class="chip-row" id="catalogCategoryChips"></div>
+      <div class="grid" id="catalogGrid"></div>
+    </section>
+
+    <!-- CART VIEW -->
+    <section class="view" id="view-cart">
+      <div class="section-head"><h2>Savat</h2></div>
+      <div id="cartContent"></div>
+    </section>
+
+  </main>
+
+  <nav class="tabbar">
+    <button class="tab active" data-tab="home" onclick="showView('home')">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11l9-8 9 8"></path><path d="M5 10v10a1 1 0 0 0 1 1h4v-6h4v6h4a1 1 0 0 0 1-1V10"></path></svg>
+      <span>Bosh sahifa</span>
+    </button>
+    <button class="tab" data-tab="categories" onclick="showView('categories')">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7" rx="1.5"></rect><rect x="14" y="3" width="7" height="7" rx="1.5"></rect><rect x="3" y="14" width="7" height="7" rx="1.5"></rect><rect x="14" y="14" width="7" height="7" rx="1.5"></rect></svg>
+      <span>Toifalar</span>
+    </button>
+    <button class="tab" data-tab="cart" onclick="showView('cart')">
+      <div class="tab-icon-wrap">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="21" r="1"></circle><circle cx="20" cy="21" r="1"></circle><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path></svg>
+        <span class="tab-badge" id="tabCartBadge" style="display:none;">0</span>
+      </div>
+      <span>Savat</span>
+    </button>
+  </nav>
+
+  <div class="toast" id="toast"></div>
+</div>
+
+<script>
+/* ---------------- Icons (line-art, currentColor) ---------------- */
+const ICONS = {
+  pan: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="10" cy="12" rx="7" ry="4"></ellipse><path d="M17 10l5-3"></path><path d="M3 12v1a7 4 0 0 0 14 0v-1"></path></svg>',
+  plate: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"></circle><circle cx="12" cy="12" r="4"></circle></svg>',
+  jar: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="7" y="4" width="10" height="3" rx="1"></rect><path d="M6 7h12l-1 13a2 2 0 0 1-2 2H9a2 2 0 0 1-2-2L6 7z"></path></svg>',
+  tray: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="8" width="18" height="10" rx="2"></rect><path d="M7 8V6a2 2 0 0 1 2-2h6a2 2 0 0 1 2 2v2"></path></svg>',
+  broom: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20 4L10 14"></path><path d="M9 15l-5 6"></path><path d="M9 15c-2 0-5 1-6 5"></path><path d="M9 15c1-2 1-5-1-6"></path><path d="M13 11c2 0 4 1 5-1"></path></svg>',
+  bucket: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 8h16l-2 12a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L4 8z"></path><path d="M2 8h20"></path><path d="M8 8a4 4 0 0 1 8 0"></path></svg>',
+  brush: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 15l6-6"></path><path d="M14 4l6 6-8.5 8.5a3 3 0 0 1-4.24 0v0a3 3 0 0 1 0-4.24L16 5"></path><path d="M5 19l-2 2"></path></svg>',
+  mop: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v13"></path><path d="M12 15c-3 0-5 2-5 4v3h10v-3c0-2-2-4-5-4z"></path></svg>',
+  bottle: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M10 2h4v3l2 2v13a2 2 0 0 1-2 2h-4a2 2 0 0 1-2-2V7l2-2V2z"></path><path d="M8 12h8"></path></svg>',
+  basket: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 10h16l-1.5 9a2 2 0 0 1-2 1.7H7.5a2 2 0 0 1-2-1.7L4 10z"></path><path d="M8 10a4 6 0 0 1 8 0"></path><path d="M4 10h16"></path></svg>',
+  box: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 8l-9-5-9 5 9 5 9-5z"></path><path d="M3 8v9l9 5 9-5V8"></path><path d="M12 13v9"></path></svg>',
+  bulb: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18h6"></path><path d="M10 21h4"></path><path d="M12 3a6 6 0 0 0-4 10.5c.6.6 1 1.3 1 2.5h6c0-1.2.4-1.9 1-2.5A6 6 0 0 0 12 3z"></path></svg>',
+  hammer: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M15 12l-8.5 8.5a1.5 1.5 0 0 1-2-2L13 10"></path><path d="M13 4l3 3 3-1 2 2-1 3 3 3-4 4-3-3"></path><path d="M14 5l5 5"></path></svg>',
+  wrench: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a4 4 0 1 0-5.4 5.4L3 18l3 3 6.3-6.3a4 4 0 0 0 5.4-5.4l-2.8 2.8-2-2 2.8-2.8z"></path></svg>',
+  tape: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="10" cy="10" r="7"></circle><circle cx="10" cy="10" r="2.5"></circle><path d="M15 15l6 6"></path></svg>',
+  drill: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 10v3h10l4-1.5v-0-0L13 10H3z"></path><path d="M17 11.5L22 10v3l-5-1.5z"></path><path d="M6 13v4"></path><path d="M9 13v3"></path></svg>',
+  plug: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 2v5"></path><path d="M15 2v5"></path><path d="M6 7h12v4a6 6 0 0 1-12 0V7z"></path><path d="M12 17v5"></path></svg>',
+  pipe: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M2 9h13a4 4 0 0 1 4 4v2"></path><circle cx="19" cy="17" r="3"></circle><circle cx="4" cy="9" r="2"></circle></svg>',
+  roller: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="14" height="6" rx="2"></rect><path d="M8 10v5"></path><rect x="6" y="15" width="4" height="6" rx="1"></rect></svg>',
+  trowel: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14 3l7 7-2 2-7-7 2-2z"></path><path d="M17 8L4 21"></path><path d="M4 21l3-5"></path></svg>',
+  paintcan: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 8h14l-1.3 11a2 2 0 0 1-2 1.8H8.3a2 2 0 0 1-2-1.8L5 8z"></path><path d="M3 8h18"></path><path d="M9 8V5a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v3"></path><path d="M9 12c1 1 2 1 3 0s2-1 3 0"></path></svg>',
+  brick: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="8" height="6" rx="0.5"></rect><rect x="14" y="4" width="8" height="6" rx="0.5"></rect><rect x="8" y="14" width="8" height="6" rx="0.5"></rect><rect x="2" y="14" width="4" height="6" rx="0.5"></rect><rect x="18" y="14" width="4" height="6" rx="0.5"></rect></svg>',
+  cement: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6 4h12l2 4-1.4 13a2 2 0 0 1-2 1.8H7.4a2 2 0 0 1-2-1.8L4 8z"></path><path d="M8 4V2.8A1 1 0 0 1 9 2h6a1 1 0 0 1 1 1.2V4"></path><path d="M7 11h10"></path><path d="M7 15h10"></path></svg>',
+  screw: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 3h6l1.5 3-1.5 3H9L7.5 6z"></path><path d="M12 9v11"></path><path d="M9.5 12l5 1.5"></path><path d="M9.5 15l5 1.5"></path><path d="M9.5 18l5 1.5"></path></svg>',
+  nail: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 4h14"></path><path d="M12 4v13"></path><path d="M9 21l3-4 3 4"></path></svg>',
+  board: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="9" width="20" height="6" rx="1"></rect><path d="M2 12h20"></path><circle cx="6" cy="12" r="0.6" fill="currentColor"></circle><circle cx="18" cy="12" r="0.6" fill="currentColor"></circle></svg>',
+  heater: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="6" width="16" height="12" rx="2"></rect><path d="M8 6v12"></path><path d="M12 6v12"></path><path d="M16 6v12"></path><path d="M6 20v1.5"></path><path d="M18 20v1.5"></path></svg>',
+  fan: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="1.8"></circle><path d="M12 10.2c0-3 1.8-5.7 4.5-5.7 2 0 2.5 3-0.3 5.2"></path><path d="M12 13.8c0 3-1.8 5.7-4.5 5.7-2 0-2.5-3 0.3-5.2"></path><path d="M9.9 12c-3 0-5.7-1.8-5.7-4.5 0-2 3-2.5 5.2 0.3"></path><path d="M14.1 12c3 0 5.7 1.8 5.7 4.5 0 2-3 2.5-5.2-0.3"></path></svg>',
+  glove: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M7 11.5V6a1.8 1.8 0 0 1 3.6 0v3.5"></path><path d="M10.6 9V4.8a1.8 1.8 0 0 1 3.6 0V9"></path><path d="M14.2 9.3V6a1.8 1.8 0 0 1 3.6 0v7a6 6 0 0 1-6 6h-2a5 5 0 0 1-5-5v-3.3a1.8 1.8 0 0 1 3.6 0"></path></svg>',
+  mask: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12.5c0-3.3 3.4-6 8-6s8 2.7 8 6-3.4 4.8-8 4.8-8-1.5-8-4.8z"></path><path d="M9 16c1 1 2 1.4 3 1.4s2-0.4 3-1.4"></path><path d="M4 12.5l-1.5 1"></path><path d="M20 12.5l1.5 1"></path></svg>',
+  helmet: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 14.5a8 8 0 0 1 16 0z"></path><path d="M2 14.5h20"></path><path d="M9 14.5V11"></path><path d="M15 14.5V11"></path></svg>',
+  goggles: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="7" cy="12" r="3.2"></circle><circle cx="17" cy="12" r="3.2"></circle><path d="M10.2 12h3.6"></path><path d="M3.2 9.5l1-3"></path><path d="M20.8 9.5l-1-3"></path></svg>'
+};
+
+/* ---------------- Data ---------------- */
+const CATEGORIES = [
+  { id: 'oshxona', name: "Oshxona buyumlari", icon: 'pan' },
+  { id: 'tozalash', name: "Xo'jalik buyumlari", icon: 'broom' },
+  { id: 'saqlash', name: "Buyumlarni saqlash", icon: 'box' },
+  { id: 'asboblar', name: "Qurilish asboblari", icon: 'hammer' },
+  { id: 'uskunalar', name: "Qurilish uskunalari", icon: 'drill' },
+  { id: 'elektr', name: "Elektrika", icon: 'plug' },
+  { id: 'yoritish', name: "Yoritish", icon: 'bulb' },
+  { id: 'santexnika', name: "Santexnika", icon: 'pipe' },
+  { id: 'isitish', name: "Isitish", icon: 'heater' },
+  { id: 'ventilyatsiya', name: "Ventilyatsiya", icon: 'fan' },
+  { id: 'boyoq', name: "Bo'yoq va lak materiallari", icon: 'paintcan' },
+  { id: 'pardoz', name: "Qurilish-pardoz materiallari", icon: 'board' },
+  { id: 'materiallar', name: "Qurilish materiallari", icon: 'cement' },
+  { id: 'jihozlar', name: "Materiallar va jihozlar", icon: 'tape' },
+  { id: 'metizlar', name: "Mahkamlagichlar va armatura", icon: 'screw' },
+  { id: 'himoya', name: "Shaxsiy himoya vositalari", icon: 'helmet' }
+];
+
+const PRODUCTS = [
+  { id: 1, name: "Alyuminiy qozon (5 l)", price: 185000, cat: 'oshxona', subcat: "Ovqat pishirish uchun idishlar", icon: 'pan', desc: "Ovqat pishirish uchun qalin devorli alyuminiy qozon, tez qiziydi va uzoq xizmat qiladi." },
+  { id: 2, name: "Nonlik laganda to'plami (6 dona)", price: 96000, cat: 'oshxona', subcat: "Tamaddixona idishlari", icon: 'plate', desc: "Kundalik dasturxon uchun 6 dona bir xil dizayndagi laganda to'plami." },
+  { id: 3, name: "Saqlash idishlari to'plami (5 dona)", price: 74000, cat: 'oshxona', subcat: "Oziq-ovqat mahsulotlarini saqlash", icon: 'jar', desc: "Oziq-ovqat mahsulotlarini toza va quruq saqlash uchun qopqoqli idishlar to'plami." },
+  { id: 4, name: "Uy supurgisi (dastali)", price: 34000, cat: 'tozalash', subcat: "Tozalash ishlari uchun inventarlar", icon: 'broom', desc: "Uzun dastali, qattiq tolali supurgi — pol va hovli uchun qulay." },
+  { id: 5, name: "Chelak, qopqoqli (12 l)", price: 45000, cat: 'tozalash', subcat: "Tozalash ishlari uchun inventarlar", icon: 'bucket', desc: "Mustahkam plastik chelak, qopqog'i bilan — suv tashish va tozalash uchun." },
+  { id: 6, name: "Idish yuvish cho'tkasi to'plami", price: 18000, cat: 'tozalash', subcat: "Tozalash ishlari uchun inventarlar", icon: 'brush', desc: "Turli o'lchamdagi cho'tkalar to'plami, qattiq kir va yog'ni oson tozalaydi." },
+  { id: 7, name: "Pol yuvish moppi (aylanuvchi)", price: 129000, cat: 'tozalash', subcat: "Tozalash ishlari uchun inventarlar", icon: 'mop', desc: "Aylanuvchi boshli mop, siqish tizimi bilan — polni tez va quruq tozalaydi." },
+  { id: 8, name: "Universal tozalash spreyi (750 ml)", price: 22000, cat: 'tozalash', subcat: "Tozalash ishlari uchun inventarlar", icon: 'bottle', desc: "Oshxona va hammom yuzalari uchun universal tozalovchi sprey." },
+  { id: 9, name: "Bolg'a (500 g)", price: 45000, cat: 'asboblar', subcat: "Urish-dastali asboblari", icon: 'hammer', desc: "Mustahkam po'lat bolg'a, qulay dastagi bilan — uy ta'mirida asosiy vosita." },
+  { id: 10, name: "Otvertkalar to'plami (6 dona)", price: 38000, cat: 'asboblar', subcat: "Kalitlar va otvyotkalar", icon: 'wrench', desc: "Turli o'lchamdagi ploskiy va krestoviy otvertkalar to'plami." },
+  { id: 11, name: "Gayka kaliti to'plami", price: 52000, cat: 'asboblar', subcat: "Kalitlar va otvyotkalar", icon: 'wrench', desc: "Turli o'lchamdagi gayka kalitlari, xromlangan, zanglamaydigan." },
+  { id: 12, name: "O'lchov lentasi (5 m)", price: 25000, cat: 'asboblar', subcat: "O'lchov asboblari", icon: 'tape', desc: "5 metrgacha o'lchaydigan, avtomatik o'raluvchi metall lenta." },
+  { id: 13, name: "Elektr drel", price: 420000, cat: 'asboblar', subcat: "Elektr asboblar", icon: 'drill', desc: "Kuchli elektr drel, yog'och va devor uchun turli насадка bilan ishlaydi." },
+  { id: 15, name: "Rozetka (ikki knopkali)", price: 22000, cat: 'elektr', subcat: "Rozetkalar, vilkalar va o'chirgichlar", icon: 'plug', desc: "Ikki knopkali devor rozetkasi, uy va ofis uchun mos." },
+  { id: 16, name: "Elektr kabeli 2x1.5 (metriga)", price: 6000, cat: 'elektr', subcat: "Kabellar va simlar", icon: 'plug', desc: "Mis o'zakli 2x1.5 mm elektr kabeli, metrига sotiladi." },
+  { id: 24, name: "Avtomat vyklyuchatel (16A)", price: 32000, cat: 'elektr', subcat: "To'lqinli kuchlanish himoyachilari", icon: 'plug', desc: "Elektr tarmog'ini himoya qiluvchi 16A avtomat vyklyuchatel." },
+  { id: 25, name: "Uzaytirgich (5 kolodkali)", price: 48000, cat: 'elektr', subcat: "Tarmoq filtrlar, ajratgichlar va uzaytirgichlar", icon: 'plug', desc: "5 ta rozetkali, 3 metr kabelli uzaytirgich, himoya qopqog'i bilan." },
+  { id: 14, name: "LED lampa (9W)", price: 15000, cat: 'yoritish', subcat: "Lampochkalar", icon: 'bulb', desc: "Kam quvvat sarflaydigan, yorug' LED lampa — uzoq xizmat qiladi." },
+  { id: 39, name: "Lyustra (3 lampali)", price: 145000, cat: 'yoritish', subcat: "O'rnatiladigan yoritgichlar", icon: 'bulb', desc: "3 lampali, zamonaviy dizayndagi shift lyustrasi." },
+  { id: 40, name: "Qo'l fonarigi (quvvatli)", price: 42000, cat: 'yoritish', subcat: "Favqulodda uchun yoritgich", icon: 'bulb', desc: "Quvvatli, uzoq masofani yoritadigan qayta zaryadlanuvchi fonarik." },
+  { id: 17, name: "Plastik suv trubasi 1/2\" (metriga)", price: 12000, cat: 'santexnika', subcat: "Truboprovod", icon: 'pipe', desc: "Ichimlik suvi tizimlari uchun mustahkam plastik truba, metrига sotiladi." },
+  { id: 27, name: "Kanalizatsiya trubasi 50mm (metriga)", price: 18000, cat: 'santexnika', subcat: "Truboprovod", icon: 'pipe', desc: "Kanalizatsiya tizimlari uchun 50mm diametrli plastik truba." },
+  { id: 26, name: "Aralashtirgich kran (oshxona uchun)", price: 145000, cat: 'santexnika', subcat: "Aralashtirgichlar va butlovchi qismlar", icon: 'pipe', desc: "Oshxona rakovinasi uchun issiq-sovuq suv aralashtirgich krani." },
+  { id: 28, name: "Sifon (rakovina uchun)", price: 35000, cat: 'santexnika', subcat: "Sifonlar", icon: 'pipe', desc: "Rakovina ostiga o'rnatiladigan plastik sifon, hidni to'sadi." },
+  { id: 18, name: "Santexnika lentasi (FUM)", price: 5000, cat: 'santexnika', subcat: "Santexnika armatura va aksessuarlar", icon: 'pipe', desc: "Truba ulanishlarini germetiklash uchun FUM lenta." },
+  { id: 41, name: "Elektr isitgich (500W)", price: 210000, cat: 'isitish', subcat: "Isitish konvektorlari", icon: 'heater', desc: "Kichik xonalar uchun qulay, tez isitadigan 500W elektr isitgich." },
+  { id: 42, name: "Konvektor isitgich (1500W)", price: 480000, cat: 'isitish', subcat: "Isitish konvektorlari", icon: 'heater', desc: "Kuchli 1500W konvektor, katta xonalarni tez va bir tekis isitadi." },
+  { id: 43, name: "Devor ventilyatori (100mm)", price: 65000, cat: 'ventilyatsiya', subcat: "Havoni tortuvchi ventilyatorlar", icon: 'fan', desc: "Hammom va oshxona uchun 100mm devor ventilyatori, sokin ishlaydi." },
+  { id: 44, name: "Shamollatish panjarasi (universal)", price: 25000, cat: 'ventilyatsiya', subcat: "Shamollatish panjaralari va revizion lyuklar", icon: 'fan', desc: "Ventilyatsiya kanallari uchun universal plastik panjara." },
+  { id: 19, name: "Devor bo'yog'i, akril (3 l)", price: 95000, cat: 'boyoq', subcat: "Bo'yoqlar", icon: 'paintcan', desc: "Ichki devor uchun hidsiz, tez quriydigan akril bo'yoq." },
+  { id: 29, name: "Grunt (singdiruvchi bo'yoq, 5 l)", price: 68000, cat: 'boyoq', subcat: "Gruntovka", icon: 'paintcan', desc: "Devorni bo'yashdan oldin ishlov berish uchun singdiruvchi grunt." },
+  { id: 20, name: "Bo'yoq g'altagi to'plami", price: 28000, cat: 'boyoq', subcat: "Bo'yash va pardozlash uchun asboblar", icon: 'roller', desc: "Turli o'lchamdagi g'altak va cho'tkalar to'plami." },
+  { id: 21, name: "Shpaklyovka (1 kg)", price: 15000, cat: 'boyoq', subcat: "Bo'yash va pardozlash uchun asboblar", icon: 'trowel', desc: "Devordagi darz va notekisliklarni tekislash uchun shpaklyovka." },
+  { id: 22, name: "Shpatel (metall, 100 mm)", price: 18000, cat: 'boyoq', subcat: "Bo'yash va pardozlash uchun asboblar", icon: 'trowel', desc: "Shpaklyovka va gips bilan ishlash uchun metall shpatel." },
+  { id: 23, name: "Saqlash qutisi (plastik, 20 l)", price: 47000, cat: 'saqlash', subcat: "Quti, savat va konteynerlar", icon: 'box', desc: "Uy buyumlarini tartibli saqlash uchun qopqoqli plastik quti." },
+  { id: 45, name: "Plastik konteynerlar to'plami (3 dona)", price: 38000, cat: 'saqlash', subcat: "Quti, savat va konteynerlar", icon: 'box', desc: "Turli o'lchamdagi 3 dona shaffof saqlash konteyneri." },
+  { id: 30, name: "Sement (Portland, 50 kg)", price: 62000, cat: 'materiallar', subcat: "Qurilish aralashmalari", icon: 'cement', desc: "Qurilish va ta'mirlash ishlari uchun sifatli Portland sementi." },
+  { id: 33, name: "Qum (1 tonna)", price: 220000, cat: 'materiallar', subcat: "Qurilish aralashmalari", icon: 'cement', desc: "Beton va shtukaturka aralashmasi uchun tozalangan qum." },
+  { id: 31, name: "Silikat g'isht (100 dona)", price: 480000, cat: 'materiallar', subcat: "Qoplama materiallari", icon: 'brick', desc: "Devor qurish uchun mustahkam silikat g'isht, 100 dona." },
+  { id: 32, name: "Gipsokarton list (1.2x2.5 m)", price: 95000, cat: 'materiallar', subcat: "Qoplama materiallari", icon: 'board', desc: "Devor va shift uchun standart o'lchamdagi gipsokarton list." },
+  { id: 34, name: "Yog'och taxta (4m, qarag'ay)", price: 78000, cat: 'materiallar', subcat: "Qoplama materiallari", icon: 'board', desc: "Qurilish ishlari uchun qarag'ay yog'ochidan tayyorlangan taxta." },
+  { id: 35, name: "Mix (100x4mm, 1 kg)", price: 16000, cat: 'metizlar', subcat: "Mixlar", icon: 'nail', desc: "Yog'och konstruksiyalar uchun 100x4mm o'lchamdagi mix, 1 kg." },
+  { id: 36, name: "Yog'och vinti to'plami (100 dona)", price: 22000, cat: 'metizlar', subcat: "Vintlar va murvatlar", icon: 'screw', desc: "Turli o'lchamdagi yog'och vintlari, 100 donalik to'plam." },
+  { id: 37, name: "Bolt-gayka to'plami (assorti)", price: 34000, cat: 'metizlar', subcat: "Shaybalar va gaykalar", icon: 'screw', desc: "Turli o'lchamdagi bolt va gaykalar assorti to'plami." },
+  { id: 38, name: "Dyubel-mix to'plami (50 dona)", price: 19000, cat: 'metizlar', subcat: "Dyubellar", icon: 'screw', desc: "Devorga mahkamlash uchun dyubel-mix to'plami, 50 dona." },
+  { id: 46, name: "Ish qo'lqoplari (5 juft)", price: 28000, cat: 'himoya', subcat: "Himoya qo'lqoplari", icon: 'glove', desc: "Qurilish ishlari uchun mustahkam, sirpanmaydigan ish qo'lqoplari." },
+  { id: 47, name: "Chang niqobi (10 dona)", price: 22000, cat: 'himoya', subcat: "Himoya niqoblari", icon: 'mask', desc: "Chang va zarrachalardan himoya qiluvchi bir martalik niqoblar, 10 dona." },
+  { id: 48, name: "Himoya ko'zoynagi", price: 18000, cat: 'himoya', subcat: "Qurilish ko'zoynaklari", icon: 'goggles', desc: "Kesish va parmalash ishlarida ko'zni himoya qiluvchi shaffof ko'zoynak." },
+  { id: 49, name: "Qurilish kaskasi", price: 45000, cat: 'himoya', subcat: "Xavfsizlik uskunalari", icon: 'helmet', desc: "Qurilish maydonida boshni zarbalardan himoya qiluvchi mustahkam kaska." },
+  { id: 50, name: "Oshxona anjomlari", price: 45000, cat: 'oshxona', subcat: "Oshxona anjomlari", icon: 'pan', desc: "Tez orada aniq nomi, rasmi va narxi bilan to'ldiriladi." },
+  { id: 51, name: "Oshxonada tartib", price: 45000, cat: 'oshxona', subcat: "Oshxonada tartib", icon: 'pan', desc: "Tez orada aniq nomi, rasmi va narxi bilan to'ldiriladi." },
+  { id: 52, name: "Krujka, stakan va bokallar", price: 45000, cat: 'oshxona', subcat: "Krujka, stakan va bokallar", icon: 'pan', desc: "Tez orada aniq nomi, rasmi va narxi bilan to'ldiriladi." },
+  { id: 53, name: "Termos va termo krujkalar", price: 45000, cat: 'oshxona', subcat: "Termos va termo krujkalar", icon: 'pan', desc: "Tez orada aniq nomi, rasmi va narxi bilan to'ldiriladi." },
+  { id: 54, name: "Maydalagich va sharbat chiqargichlar", price: 45000, cat: 'oshxona', subcat: "Maydalagich va sharbat chiqargichlar", icon: 'pan', desc: "Tez orada aniq nomi, rasmi va narxi bilan to'ldiriladi." },
+  { id: 55, name: "Choynak va qahva idishlari", price: 45000, cat: 'oshxona', subcat: "Choynak va qahva idishlari", icon: 'pan', desc: "Tez orada aniq nomi, rasmi va narxi bilan to'ldiriladi." },
+  { id: 56, name: "Pazandachilik aksessuarlari", price: 45000, cat: 'oshxona', subcat: "Pazandachilik aksessuarlari", icon: 'pan', desc: "Tez orada aniq nomi, rasmi va narxi bilan to'ldiriladi." },
+  { id: 57, name: "Oshxona aksessuarlari", price: 45000, cat: 'oshxona', subcat: "Oshxona aksessuarlari", icon: 'pan', desc: "Tez orada aniq nomi, rasmi va narxi bilan to'ldiriladi." },
+  { id: 58, name: "Bir martali idish va qadoqlash", price: 45000, cat: 'oshxona', subcat: "Bir martali idish va qadoqlash", icon: 'pan', desc: "Tez orada aniq nomi, rasmi va narxi bilan to'ldiriladi." },
+  { id: 59, name: "Ovqat pishirish uchun shakllar", price: 45000, cat: 'oshxona', subcat: "Ovqat pishirish uchun shakllar", icon: 'pan', desc: "Tez orada aniq nomi, rasmi va narxi bilan to'ldiriladi." },
+  { id: 60, name: "Suv uchun filtrlar", price: 45000, cat: 'oshxona', subcat: "Suv uchun filtrlar", icon: 'pan', desc: "Tez orada aniq nomi, rasmi va narxi bilan to'ldiriladi." },
+  { id: 61, name: "Ichimlik uchun aksessuarlar", price: 45000, cat: 'oshxona', subcat: "Ichimlik uchun aksessuarlar", icon: 'pan', desc: "Tez orada aniq nomi, rasmi va narxi bilan to'ldiriladi." },
+  { id: 62, name: "Vino aksessuarlari", price: 45000, cat: 'oshxona', subcat: "Vino aksessuarlari", icon: 'pan', desc: "Tez orada aniq nomi, rasmi va narxi bilan to'ldiriladi." },
+  { id: 63, name: "Konservalash uchun tovarlar", price: 45000, cat: 'oshxona', subcat: "Konservalash uchun tovarlar", icon: 'pan', desc: "Tez orada aniq nomi, rasmi va narxi bilan to'ldiriladi." },
+  { id: 64, name: "Vanna aksessuarlari", price: 30000, cat: 'tozalash', subcat: "Vanna aksessuarlari", icon: 'broom', desc: "Tez orada aniq nomi, rasmi va narxi bilan to'ldiriladi." },
+  { id: 65, name: "Kiyim va poyabzal parvarishi", price: 30000, cat: 'tozalash', subcat: "Kiyim va poyabzal parvarishi", icon: 'broom', desc: "Tez orada aniq nomi, rasmi va narxi bilan to'ldiriladi." },
+  { id: 66, name: "Hammom va sauna tovarlari", price: 30000, cat: 'tozalash', subcat: "Hammom va sauna tovarlari", icon: 'broom', desc: "Tez orada aniq nomi, rasmi va narxi bilan to'ldiriladi." },
+  { id: 67, name: "Axlat qutilari va baklar", price: 30000, cat: 'tozalash', subcat: "Axlat qutilari va baklar", icon: 'broom', desc: "Tez orada aniq nomi, rasmi va narxi bilan to'ldiriladi." },
+  { id: 68, name: "Qadoqlash va tashish", price: 30000, cat: 'tozalash', subcat: "Qadoqlash va tashish", icon: 'broom', desc: "Tez orada aniq nomi, rasmi va narxi bilan to'ldiriladi." },
+  { id: 69, name: "Tarozilar", price: 30000, cat: 'tozalash', subcat: "Tarozilar", icon: 'broom', desc: "Tez orada aniq nomi, rasmi va narxi bilan to'ldiriladi." },
+  { id: 70, name: "Xo'jalik sumkalari", price: 30000, cat: 'tozalash', subcat: "Xo'jalik sumkalari", icon: 'broom', desc: "Tez orada aniq nomi, rasmi va narxi bilan to'ldiriladi." },
+  { id: 71, name: "Sumka-aravachalar", price: 30000, cat: 'tozalash', subcat: "Sumka-aravachalar", icon: 'broom', desc: "Tez orada aniq nomi, rasmi va narxi bilan to'ldiriladi." },
+  { id: 72, name: "Organayzer va ajratuvchilar", price: 35000, cat: 'saqlash', subcat: "Organayzer va ajratuvchilar", icon: 'box', desc: "Tez orada aniq nomi, rasmi va narxi bilan to'ldiriladi." },
+  { id: 73, name: "Vakuumli paket va qadoqlagichlar", price: 35000, cat: 'saqlash', subcat: "Vakuumli paket va qadoqlagichlar", icon: 'box', desc: "Tez orada aniq nomi, rasmi va narxi bilan to'ldiriladi." },
+  { id: 74, name: "Kiyim uchun qoplamalar", price: 35000, cat: 'saqlash', subcat: "Kiyim uchun qoplamalar", icon: 'box', desc: "Tez orada aniq nomi, rasmi va narxi bilan to'ldiriladi." },
+  { id: 75, name: "Kir uchun baklar", price: 35000, cat: 'saqlash', subcat: "Kir uchun baklar", icon: 'box', desc: "Tez orada aniq nomi, rasmi va narxi bilan to'ldiriladi." },
+  { id: 76, name: "Poyabzal uchun qoplamalar", price: 35000, cat: 'saqlash', subcat: "Poyabzal uchun qoplamalar", icon: 'box', desc: "Tez orada aniq nomi, rasmi va narxi bilan to'ldiriladi." },
+  { id: 77, name: "Soyabon stendlari", price: 35000, cat: 'saqlash', subcat: "Soyabon stendlari", icon: 'box', desc: "Tez orada aniq nomi, rasmi va narxi bilan to'ldiriladi." },
+  { id: 78, name: "Slesarlik asboblari", price: 60000, cat: 'asboblar', subcat: "Slesarlik asboblari", icon: 'hammer', desc: "Tez orada aniq nomi, rasmi va narxi bilan to'ldiriladi." },
+  { id: 79, name: "Kesish va arralash asboblari", price: 60000, cat: 'asboblar', subcat: "Kesish va arralash asboblari", icon: 'hammer', desc: "Tez orada aniq nomi, rasmi va narxi bilan to'ldiriladi." },
+  { id: 80, name: "Qo'l asboblar to'plami", price: 60000, cat: 'asboblar', subcat: "Qo'l asboblar to'plami", icon: 'hammer', desc: "Tez orada aniq nomi, rasmi va narxi bilan to'ldiriladi." },
+  { id: 81, name: "Kavsharlash uskunalari", price: 60000, cat: 'asboblar', subcat: "Kavsharlash uskunalari", icon: 'hammer', desc: "Tez orada aniq nomi, rasmi va narxi bilan to'ldiriladi." },
+  { id: 82, name: "Montaj va mahkamlash asboblari", price: 60000, cat: 'asboblar', subcat: "Montaj va mahkamlash asboblari", icon: 'hammer', desc: "Tez orada aniq nomi, rasmi va narxi bilan to'ldiriladi." },
+  { id: 83, name: "Ustaxona uchun uskunalar", price: 60000, cat: 'asboblar', subcat: "Ustaxona uchun uskunalar", icon: 'hammer', desc: "Tez orada aniq nomi, rasmi va narxi bilan to'ldiriladi." },
+  { id: 84, name: "Payvandlash uskunalari", price: 60000, cat: 'asboblar', subcat: "Payvandlash uskunalari", icon: 'hammer', desc: "Tez orada aniq nomi, rasmi va narxi bilan to'ldiriladi." },
+  { id: 85, name: "Pnevmouskunalar", price: 60000, cat: 'asboblar', subcat: "Pnevmouskunalar", icon: 'hammer', desc: "Tez orada aniq nomi, rasmi va narxi bilan to'ldiriladi." },
+  { id: 86, name: "Quvur kesuvchi pichoq", price: 60000, cat: 'asboblar', subcat: "Quvur kesuvchi pichoq", icon: 'hammer', desc: "Tez orada aniq nomi, rasmi va narxi bilan to'ldiriladi." },
+  { id: 87, name: "Maxsus asboblar", price: 60000, cat: 'asboblar', subcat: "Maxsus asboblar", icon: 'hammer', desc: "Tez orada aniq nomi, rasmi va narxi bilan to'ldiriladi." },
+  { id: 88, name: "Generatorlar", price: 350000, cat: 'uskunalar', subcat: "Generatorlar", icon: 'drill', desc: "Tez orada aniq nomi, rasmi va narxi bilan to'ldiriladi." },
+  { id: 89, name: "Kompressorlar", price: 350000, cat: 'uskunalar', subcat: "Kompressorlar", icon: 'drill', desc: "Tez orada aniq nomi, rasmi va narxi bilan to'ldiriladi." },
+  { id: 90, name: "Boshqa qurilish uskunalari", price: 350000, cat: 'uskunalar', subcat: "Boshqa qurilish uskunalari", icon: 'drill', desc: "Tez orada aniq nomi, rasmi va narxi bilan to'ldiriladi." },
+  { id: 91, name: "Qurilish changyutgichlari", price: 350000, cat: 'uskunalar', subcat: "Qurilish changyutgichlari", icon: 'drill', desc: "Tez orada aniq nomi, rasmi va narxi bilan to'ldiriladi." },
+  { id: 92, name: "Beton aralashtirgich", price: 350000, cat: 'uskunalar', subcat: "Beton aralashtirgich", icon: 'drill', desc: "Tez orada aniq nomi, rasmi va narxi bilan to'ldiriladi." },
+  { id: 93, name: "Arralash dastgohlari", price: 350000, cat: 'uskunalar', subcat: "Arralash dastgohlari", icon: 'drill', desc: "Tez orada aniq nomi, rasmi va narxi bilan to'ldiriladi." },
+  { id: 94, name: "Jilvirlash stanoklari", price: 350000, cat: 'uskunalar', subcat: "Jilvirlash stanoklari", icon: 'drill', desc: "Tez orada aniq nomi, rasmi va narxi bilan to'ldiriladi." },
+  { id: 95, name: "Kompressor aksessuarlari", price: 350000, cat: 'uskunalar', subcat: "Kompressor aksessuarlari", icon: 'drill', desc: "Tez orada aniq nomi, rasmi va narxi bilan to'ldiriladi." },
+  { id: 96, name: "Parmalash stanoklari", price: 350000, cat: 'uskunalar', subcat: "Parmalash stanoklari", icon: 'drill', desc: "Tez orada aniq nomi, rasmi va narxi bilan to'ldiriladi." },
+  { id: 97, name: "Randalash stanoklari", price: 350000, cat: 'uskunalar', subcat: "Randalash stanoklari", icon: 'drill', desc: "Tez orada aniq nomi, rasmi va narxi bilan to'ldiriladi." },
+  { id: 98, name: "Tokarlik stanoklari", price: 350000, cat: 'uskunalar', subcat: "Tokarlik stanoklari", icon: 'drill', desc: "Tez orada aniq nomi, rasmi va narxi bilan to'ldiriladi." },
+  { id: 99, name: "Vibroplitalar", price: 350000, cat: 'uskunalar', subcat: "Vibroplitalar", icon: 'drill', desc: "Tez orada aniq nomi, rasmi va narxi bilan to'ldiriladi." },
+  { id: 100, name: "Batareyalar", price: 25000, cat: 'elektr', subcat: "Batareyalar", icon: 'plug', desc: "Tez orada aniq nomi, rasmi va narxi bilan to'ldiriladi." },
+  { id: 101, name: "Eshik jiringlagichlari va domofonlar", price: 25000, cat: 'elektr', subcat: "Eshik jiringlagichlari va domofonlar", icon: 'plug', desc: "Tez orada aniq nomi, rasmi va narxi bilan to'ldiriladi." },
+  { id: 102, name: "Quyosh panellari", price: 25000, cat: 'elektr', subcat: "Quyosh panellari", icon: 'plug', desc: "Tez orada aniq nomi, rasmi va narxi bilan to'ldiriladi." },
+  { id: 103, name: "Yoritish uchun aksessuarlar", price: 30000, cat: 'yoritish', subcat: "Yoritish uchun aksessuarlar", icon: 'bulb', desc: "Tez orada aniq nomi, rasmi va narxi bilan to'ldiriladi." },
+  { id: 104, name: "Svetodiod tasmasi", price: 30000, cat: 'yoritish', subcat: "Svetodiod tasmasi", icon: 'bulb', desc: "Tez orada aniq nomi, rasmi va narxi bilan to'ldiriladi." },
+  { id: 105, name: "Projektorlar", price: 30000, cat: 'yoritish', subcat: "Projektorlar", icon: 'bulb', desc: "Tez orada aniq nomi, rasmi va narxi bilan to'ldiriladi." },
+  { id: 106, name: "Patronlar va perexodniklar", price: 30000, cat: 'yoritish', subcat: "Patronlar va perexodniklar", icon: 'bulb', desc: "Tez orada aniq nomi, rasmi va narxi bilan to'ldiriladi." },
+  { id: 107, name: "Chiroq anjomlari", price: 30000, cat: 'yoritish', subcat: "Chiroq anjomlari", icon: 'bulb', desc: "Tez orada aniq nomi, rasmi va narxi bilan to'ldiriladi." },
+  { id: 108, name: "Pol va stol uchun yoritgichlar", price: 30000, cat: 'yoritish', subcat: "Pol va stol uchun yoritgichlar", icon: 'bulb', desc: "Tez orada aniq nomi, rasmi va narxi bilan to'ldiriladi." },
+  { id: 109, name: "LED panellari", price: 30000, cat: 'yoritish', subcat: "LED panellari", icon: 'bulb', desc: "Tez orada aniq nomi, rasmi va narxi bilan to'ldiriladi." },
+  { id: 110, name: "Devor uchun yoritgichlar", price: 30000, cat: 'yoritish', subcat: "Devor uchun yoritgichlar", icon: 'bulb', desc: "Tez orada aniq nomi, rasmi va narxi bilan to'ldiriladi." },
+  { id: 111, name: "Sauna uchun yoritgichlar", price: 30000, cat: 'yoritish', subcat: "Sauna uchun yoritgichlar", icon: 'bulb', desc: "Tez orada aniq nomi, rasmi va narxi bilan to'ldiriladi." },
+  { id: 112, name: "Oshxona moykalari va komponentlari", price: 40000, cat: 'santexnika', subcat: "Oshxona moykalari va komponentlari", icon: 'pipe', desc: "Tez orada aniq nomi, rasmi va narxi bilan to'ldiriladi." },
+  { id: 113, name: "Dush uskunalari", price: 40000, cat: 'santexnika', subcat: "Dush uskunalari", icon: 'pipe', desc: "Tez orada aniq nomi, rasmi va narxi bilan to'ldiriladi." },
+  { id: 114, name: "Hojatxonalar va o'rnatish", price: 40000, cat: 'santexnika', subcat: "Hojatxonalar va o'rnatish", icon: 'pipe', desc: "Tez orada aniq nomi, rasmi va narxi bilan to'ldiriladi." },
+  { id: 115, name: "Rakovinalar, yuvinish havzalari va pьedestallar", price: 40000, cat: 'santexnika', subcat: "Rakovinalar, yuvinish havzalari va pьedestallar", icon: 'pipe', desc: "Tez orada aniq nomi, rasmi va narxi bilan to'ldiriladi." },
+  { id: 116, name: "Nasoslar", price: 40000, cat: 'santexnika', subcat: "Nasoslar", icon: 'pipe', desc: "Tez orada aniq nomi, rasmi va narxi bilan to'ldiriladi." },
+  { id: 117, name: "Suvni tozalash va filtrlash", price: 40000, cat: 'santexnika', subcat: "Suvni tozalash va filtrlash", icon: 'pipe', desc: "Tez orada aniq nomi, rasmi va narxi bilan to'ldiriladi." },
+  { id: 118, name: "Sochiq quritgich", price: 200000, cat: 'isitish', subcat: "Sochiq quritgich", icon: 'heater', desc: "Tez orada aniq nomi, rasmi va narxi bilan to'ldiriladi." },
+  { id: 119, name: "Radiator bog'lovchilar", price: 200000, cat: 'isitish', subcat: "Radiator bog'lovchilar", icon: 'heater', desc: "Tez orada aniq nomi, rasmi va narxi bilan to'ldiriladi." },
+  { id: 120, name: "Radiatorlar", price: 200000, cat: 'isitish', subcat: "Radiatorlar", icon: 'heater', desc: "Tez orada aniq nomi, rasmi va narxi bilan to'ldiriladi." },
+  { id: 121, name: "Issiq pollar", price: 200000, cat: 'isitish', subcat: "Issiq pollar", icon: 'heater', desc: "Tez orada aniq nomi, rasmi va narxi bilan to'ldiriladi." },
+  { id: 122, name: "Havo va shlam separatorlari", price: 200000, cat: 'isitish', subcat: "Havo va shlam separatorlari", icon: 'heater', desc: "Tez orada aniq nomi, rasmi va narxi bilan to'ldiriladi." },
+  { id: 123, name: "Isitish qozonlari", price: 200000, cat: 'isitish', subcat: "Isitish qozonlari", icon: 'heater', desc: "Tez orada aniq nomi, rasmi va narxi bilan to'ldiriladi." },
+  { id: 124, name: "Kengaytiradigan baklar", price: 200000, cat: 'isitish', subcat: "Kengaytiradigan baklar", icon: 'heater', desc: "Tez orada aniq nomi, rasmi va narxi bilan to'ldiriladi." },
+  { id: 125, name: "Kanalli ventilyatorlar", price: 55000, cat: 'ventilyatsiya', subcat: "Kanalli ventilyatorlar", icon: 'fan', desc: "Tez orada aniq nomi, rasmi va narxi bilan to'ldiriladi." },
+  { id: 126, name: "Shamollatish moslamalari", price: 55000, cat: 'ventilyatsiya', subcat: "Shamollatish moslamalari", icon: 'fan', desc: "Tez orada aniq nomi, rasmi va narxi bilan to'ldiriladi." },
+  { id: 127, name: "Havo kanallari va butlovchi qismlar", price: 55000, cat: 'ventilyatsiya', subcat: "Havo kanallari va butlovchi qismlar", icon: 'fan', desc: "Tez orada aniq nomi, rasmi va narxi bilan to'ldiriladi." },
+  { id: 128, name: "Yelim va germetikalar", price: 35000, cat: 'boyoq', subcat: "Yelim va germetikalar", icon: 'paintcan', desc: "Tez orada aniq nomi, rasmi va narxi bilan to'ldiriladi." },
+  { id: 129, name: "Aerozol bo'yoqlari", price: 35000, cat: 'boyoq', subcat: "Aerozol bo'yoqlari", icon: 'paintcan', desc: "Tez orada aniq nomi, rasmi va narxi bilan to'ldiriladi." },
+  { id: 130, name: "Qurilish laklari", price: 35000, cat: 'boyoq', subcat: "Qurilish laklari", icon: 'paintcan', desc: "Tez orada aniq nomi, rasmi va narxi bilan to'ldiriladi." },
+  { id: 131, name: "Propitkalar", price: 35000, cat: 'boyoq', subcat: "Propitkalar", icon: 'paintcan', desc: "Tez orada aniq nomi, rasmi va narxi bilan to'ldiriladi." },
+  { id: 132, name: "Erituvchilar va tozalagichlar", price: 35000, cat: 'boyoq', subcat: "Erituvchilar va tozalagichlar", icon: 'paintcan', desc: "Tez orada aniq nomi, rasmi va narxi bilan to'ldiriladi." },
+  { id: 133, name: "Pol uchun qoplamalar", price: 60000, cat: 'pardoz', subcat: "Pol uchun qoplamalar", icon: 'board', desc: "Tez orada aniq nomi, rasmi va narxi bilan to'ldiriladi." },
+  { id: 134, name: "O'zi yopishadigan plyonka", price: 60000, cat: 'pardoz', subcat: "O'zi yopishadigan plyonka", icon: 'board', desc: "Tez orada aniq nomi, rasmi va narxi bilan to'ldiriladi." },
+  { id: 135, name: "Plitka va keramogranit", price: 60000, cat: 'pardoz', subcat: "Plitka va keramogranit", icon: 'board', desc: "Tez orada aniq nomi, rasmi va narxi bilan to'ldiriladi." },
+  { id: 136, name: "Osma shiplar va qismlar", price: 60000, cat: 'pardoz', subcat: "Osma shiplar va qismlar", icon: 'board', desc: "Tez orada aniq nomi, rasmi va narxi bilan to'ldiriladi." },
+  { id: 137, name: "Gul qog'ozlar", price: 60000, cat: 'pardoz', subcat: "Gul qog'ozlar", icon: 'board', desc: "Tez orada aniq nomi, rasmi va narxi bilan to'ldiriladi." },
+  { id: 138, name: "Devor panellari", price: 60000, cat: 'pardoz', subcat: "Devor panellari", icon: 'board', desc: "Tez orada aniq nomi, rasmi va narxi bilan to'ldiriladi." },
+  { id: 139, name: "Bezak va naqsh", price: 60000, cat: 'pardoz', subcat: "Bezak va naqsh", icon: 'board', desc: "Tez orada aniq nomi, rasmi va narxi bilan to'ldiriladi." },
+  { id: 140, name: "Tom yopma va aksessuarlar", price: 80000, cat: 'materiallar', subcat: "Tom yopma va aksessuarlar", icon: 'cement', desc: "Tez orada aniq nomi, rasmi va narxi bilan to'ldiriladi." },
+  { id: 141, name: "Yomg'ir suv tizimlari", price: 80000, cat: 'materiallar', subcat: "Yomg'ir suv tizimlari", icon: 'cement', desc: "Tez orada aniq nomi, rasmi va narxi bilan to'ldiriladi." },
+  { id: 142, name: "Izolyatsiya qoplamalari va materiallari", price: 80000, cat: 'materiallar', subcat: "Izolyatsiya qoplamalari va materiallari", icon: 'cement', desc: "Tez orada aniq nomi, rasmi va narxi bilan to'ldiriladi." },
+  { id: 143, name: "Metall prokat va metall konstruksiyalar", price: 80000, cat: 'materiallar', subcat: "Metall prokat va metall konstruksiyalar", icon: 'cement', desc: "Tez orada aniq nomi, rasmi va narxi bilan to'ldiriladi." },
+  { id: 144, name: "Qurilish tasmalari", price: 30000, cat: 'jihozlar', subcat: "Qurilish tasmalari", icon: 'tape', desc: "Tez orada aniq nomi, rasmi va narxi bilan to'ldiriladi." },
+  { id: 145, name: "Izolyatsiya lentalari", price: 30000, cat: 'jihozlar', subcat: "Izolyatsiya lentalari", icon: 'tape', desc: "Tez orada aniq nomi, rasmi va narxi bilan to'ldiriladi." },
+  { id: 146, name: "Abraziv moddalar", price: 30000, cat: 'jihozlar', subcat: "Abraziv moddalar", icon: 'tape', desc: "Tez orada aniq nomi, rasmi va narxi bilan to'ldiriladi." },
+  { id: 147, name: "Drellar, o'ymakorlar va shurup burg'ichlari", price: 30000, cat: 'jihozlar', subcat: "Drellar, o'ymakorlar va shurup burg'ichlari", icon: 'tape', desc: "Tez orada aniq nomi, rasmi va narxi bilan to'ldiriladi." },
+  { id: 148, name: "Doiralar va disklar", price: 30000, cat: 'jihozlar', subcat: "Doiralar va disklar", icon: 'tape', desc: "Tez orada aniq nomi, rasmi va narxi bilan to'ldiriladi." },
+  { id: 149, name: "Ta'mirlash uchun materiallar", price: 30000, cat: 'jihozlar', subcat: "Ta'mirlash uchun materiallar", icon: 'tape', desc: "Tez orada aniq nomi, rasmi va narxi bilan to'ldiriladi." },
+  { id: 150, name: "Furnitura", price: 20000, cat: 'metizlar', subcat: "Furnitura", icon: 'screw', desc: "Tez orada aniq nomi, rasmi va narxi bilan to'ldiriladi." },
+  { id: 151, name: "Burchaklar va ushlagichlar", price: 20000, cat: 'metizlar', subcat: "Burchaklar va ushlagichlar", icon: 'screw', desc: "Tez orada aniq nomi, rasmi va narxi bilan to'ldiriladi." },
+  { id: 152, name: "Shuruplar va samorezlar", price: 20000, cat: 'metizlar', subcat: "Shuruplar va samorezlar", icon: 'screw', desc: "Tez orada aniq nomi, rasmi va narxi bilan to'ldiriladi." },
+  { id: 153, name: "Zaklyopkalar", price: 20000, cat: 'metizlar', subcat: "Zaklyopkalar", icon: 'screw', desc: "Tez orada aniq nomi, rasmi va narxi bilan to'ldiriladi." },
+  { id: 154, name: "Mayda metall buyumlar", price: 20000, cat: 'metizlar', subcat: "Mayda metall buyumlar", icon: 'screw', desc: "Tez orada aniq nomi, rasmi va narxi bilan to'ldiriladi." },
+  { id: 155, name: "Anker murvatlari", price: 20000, cat: 'metizlar', subcat: "Anker murvatlari", icon: 'screw', desc: "Tez orada aniq nomi, rasmi va narxi bilan to'ldiriladi." },
+  { id: 156, name: "Mahkamlovchi shtangalar", price: 20000, cat: 'metizlar', subcat: "Mahkamlovchi shtangalar", icon: 'screw', desc: "Tez orada aniq nomi, rasmi va narxi bilan to'ldiriladi." },
+  { id: 157, name: "Takelaj", price: 20000, cat: 'metizlar', subcat: "Takelaj", icon: 'screw', desc: "Tez orada aniq nomi, rasmi va narxi bilan to'ldiriladi." },
+  { id: 158, name: "Qurilish shpilkalari", price: 20000, cat: 'metizlar', subcat: "Qurilish shpilkalari", icon: 'screw', desc: "Tez orada aniq nomi, rasmi va narxi bilan to'ldiriladi." },
+];
+
+const SUBCATS = {
+  oshxona: ["Oshxona anjomlari","Oziq-ovqat mahsulotlarini saqlash","Ovqat pishirish uchun idishlar","Oshxonada tartib","Krujka, stakan va bokallar","Termos va termo krujkalar","Tamaddixona idishlari","Maydalagich va sharbat chiqargichlar","Choynak va qahva idishlari","Pazandachilik aksessuarlari","Oshxona aksessuarlari","Bir martali idish va qadoqlash","Ovqat pishirish uchun shakllar","Suv uchun filtrlar","Ichimlik uchun aksessuarlar","Vino aksessuarlari","Konservalash uchun tovarlar"],
+  saqlash: ["Organayzer va ajratuvchilar","Quti, savat va konteynerlar","Vakuumli paket va qadoqlagichlar","Kiyim uchun qoplamalar","Kir uchun baklar","Poyabzal uchun qoplamalar","Soyabon stendlari"],
+  tozalash: ["Tozalash ishlari uchun inventarlar","Vanna aksessuarlari","Kiyim va poyabzal parvarishi","Hammom va sauna tovarlari","Axlat qutilari va baklar","Qadoqlash va tashish","Tarozilar","Xo'jalik sumkalari","Sumka-aravachalar"],
+  asboblar: ["Elektr asboblar","Kalitlar va otvyotkalar","Slesarlik asboblari","Kesish va arralash asboblari","O'lchov asboblari","Qo'l asboblar to'plami","Kavsharlash uskunalari","Montaj va mahkamlash asboblari","Urish-dastali asboblari","Ustaxona uchun uskunalar","Payvandlash uskunalari","Pnevmouskunalar","Quvur kesuvchi pichoq","Maxsus asboblar"],
+  uskunalar: ["Generatorlar","Kompressorlar","Boshqa qurilish uskunalari","Qurilish changyutgichlari","Beton aralashtirgich","Arralash dastgohlari","Jilvirlash stanoklari","Kompressor aksessuarlari","Parmalash stanoklari","Randalash stanoklari","Tokarlik stanoklari","Vibroplitalar"],
+  yoritish: ["Yoritish uchun aksessuarlar","Svetodiod tasmasi","Lampochkalar","Projektorlar","Patronlar va perexodniklar","Chiroq anjomlari","O'rnatiladigan yoritgichlar","Pol va stol uchun yoritgichlar","Favqulodda uchun yoritgich","LED panellari","Devor uchun yoritgichlar","Sauna uchun yoritgichlar"],
+  boyoq: ["Bo'yash va pardozlash uchun asboblar","Yelim va germetikalar","Aerozol bo'yoqlari","Bo'yoqlar","Qurilish laklari","Gruntovka","Propitkalar","Erituvchilar va tozalagichlar"],
+  pardoz: ["Pol uchun qoplamalar","O'zi yopishadigan plyonka","Plitka va keramogranit","Osma shiplar va qismlar","Gul qog'ozlar","Devor panellari","Bezak va naqsh"],
+  elektr: ["Rozetkalar, vilkalar va o'chirgichlar","Batareyalar","To'lqinli kuchlanish himoyachilari","Tarmoq filtrlar, ajratgichlar va uzaytirgichlar","Eshik jiringlagichlari va domofonlar","Kabellar va simlar","Quyosh panellari"],
+  santexnika: ["Oshxona moykalari va komponentlari","Dush uskunalari","Santexnika armatura va aksessuarlar","Hojatxonalar va o'rnatish","Aralashtirgichlar va butlovchi qismlar","Rakovinalar, yuvinish havzalari va pьedestallar","Nasoslar","Sifonlar","Truboprovod","Suvni tozalash va filtrlash"],
+  materiallar: ["Tom yopma va aksessuarlar","Qurilish aralashmalari","Yomg'ir suv tizimlari","Qoplama materiallari","Izolyatsiya qoplamalari va materiallari","Metall prokat va metall konstruksiyalar"],
+  jihozlar: ["Qurilish tasmalari","Izolyatsiya lentalari","Abraziv moddalar","Drellar, o'ymakorlar va shurup burg'ichlari","Doiralar va disklar","Ta'mirlash uchun materiallar"],
+  himoya: ["Qurilish ko'zoynaklari","Xavfsizlik uskunalari","Himoya niqoblari","Himoya qo'lqoplari"],
+  isitish: ["Sochiq quritgich","Radiator bog'lovchilar","Radiatorlar","Issiq pollar","Isitish konvektorlari","Havo va shlam separatorlari","Isitish qozonlari","Kengaytiradigan baklar"],
+  ventilyatsiya: ["Havoni tortuvchi ventilyatorlar","Kanalli ventilyatorlar","Shamollatish panjaralari va revizion lyuklar","Shamollatish moslamalari","Havo kanallari va butlovchi qismlar"],
+  metizlar: ["Furnitura","Burchaklar va ushlagichlar","Mixlar","Shuruplar va samorezlar","Dyubellar","Shaybalar va gaykalar","Zaklyopkalar","Vintlar va murvatlar","Mayda metall buyumlar","Anker murvatlari","Mahkamlovchi shtangalar","Takelaj","Qurilish shpilkalari"]
+};
+
+const TELEGRAM_USERNAME = "AbdukarimxonAbduxakimovich";
+const BOT_TOKEN = "8987526957:AAHTVJYe9r5nXILdieDAIE-QO3DqoHg0dUA";
+const OWNER_CHAT_ID = "757096628";
+const SHEETS_API_URL = "https://script.google.com/macros/s/AKfycbzrlGCZtLPW5QQRosBVu-Ypm76jvQnxZDX_0PJDTav_bB2QvXMUsYQqWS0svLptIytVTA/exec";
+let stockData = {}; // { id: qty } loaded from Google Sheets
+let stockLoaded = false;
+
+/* ---------------- Telegram Mini App integration ---------------- */
+const tg = (window.Telegram && window.Telegram.WebApp) ? window.Telegram.WebApp : null;
+if (tg) {
+  tg.ready();
+  tg.expand();
+  document.body.classList.add('tg-app');
+  try {
+    tg.setHeaderColor('#1F4B49');
+    tg.setBackgroundColor('#DCE2DC');
+    tg.disableVerticalSwipes && tg.disableVerticalSwipes();
+  } catch(e){}
+  tg.MainButton.setParams({ color: '#D9A441', text_color: '#1F4B49' });
+  tg.MainButton.onClick(sendOrder);
+}
+function openTelegramChat(){
+  if (tg) { tg.openTelegramLink(`https://t.me/${TELEGRAM_USERNAME}`); }
+  else { window.open(`https://t.me/${TELEGRAM_USERNAME}`, '_blank'); }
+}
+function updateMainButton(){
+  if (!tg) return;
+  const onCart = document.getElementById('view-cart').classList.contains('active');
+  if (onCart && cartCount() > 0) {
+    tg.MainButton.setText(`Buyurtma berish — ${formatSom(cartTotal())}`);
+    tg.MainButton.show();
+  } else {
+    tg.MainButton.hide();
+  }
+}
+
+/* ---------------- State (in-memory for this session) ---------------- */
+let cart = {}; // { productId: qty }
+let activeCategory = 'all';
+let deliveryMethod = 'pickup'; // 'delivery' | 'pickup'
+let paymentMethod = 'cash'; // 'cash' | 'card'
+let customerLocation = null; // { lat, lng } | null
+
+/* ---------------- Helpers ---------------- */
+function formatSom(n){
+  return n.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ") + " so'm";
+}
+function cartCount(){
+  return Object.values(cart).reduce((a,b)=>a+b,0);
+}
+function cartTotal(){
+  return Object.entries(cart).reduce((sum,[id,qty])=>{
+    const p = PRODUCTS.find(p=>p.id==id);
+    return sum + (p ? p.price*qty : 0);
+  },0);
+}
+function showToast(msg){
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  clearTimeout(window._toastTimer);
+  window._toastTimer = setTimeout(()=>t.classList.remove('show'), 1800);
+}
+
+/* ---------------- View switching ---------------- */
+function showView(name){
+  document.querySelectorAll('.view').forEach(v=>v.classList.remove('active'));
+  document.getElementById('view-'+name).classList.add('active');
+  document.querySelectorAll('.tab').forEach(t=>{
+    const isMatch = t.dataset.tab===name || (name==='catalog' && t.dataset.tab==='categories');
+    t.classList.toggle('active', isMatch);
+  });
+  document.querySelector('main').scrollTo(0,0);
+  if(name==='cart') renderCart();
+  if(name==='categories') renderCategoriesList();
+  updateMainButton();
+}
+
+/* ---------------- Rendering: badges ---------------- */
+function updateBadges(){
+  const n = cartCount();
+  const topB = document.getElementById('topCartBadge');
+  const tabB = document.getElementById('tabCartBadge');
+  [topB, tabB].forEach(el=>{
+    el.textContent = n;
+    el.style.display = n>0 ? 'flex' : 'none';
+  });
+}
+
+/* ---------------- Rendering: home ---------------- */
+function renderHomeChips(){
+  const wrap = document.getElementById('homeCategoryChips');
+  wrap.innerHTML = CATEGORIES.map(c=>
+    `<button class="chip" onclick="openCatalogWithCategory('${c.id}')">${c.name}</button>`
+  ).join('');
+}
+function renderCategoriesList(){
+  const wrap = document.getElementById('categoriesList');
+  const allItem = `
+    <div class="cat-item all-item" onclick="openCatalogWithCategory('all')">
+      <div class="icon-wrap">${ICONS.box}</div>
+      <div class="cat-name">Barcha mahsulotlar</div>
+      <svg class="chev" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6"></path></svg>
+    </div>`;
+  const catItems = CATEGORIES.map(c => `
+    <div class="cat-item" onclick="openCatalogWithCategory('${c.id}')">
+      <div class="icon-wrap">${ICONS[c.icon] || ICONS.box}</div>
+      <div class="cat-name">${c.name}</div>
+      <svg class="chev" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6"></path></svg>
+    </div>`).join('');
+  wrap.innerHTML = allItem + catItems;
+}
+function openCatalogWithCategory(catId){
+  activeCategory = catId;
+  showView('catalog');
+  renderCatalog();
+}
+function renderFeatured(){
+  const featured = [PRODUCTS[4], PRODUCTS[0], PRODUCTS[7], PRODUCTS[9], PRODUCTS[8]];
+  const wrap = document.getElementById('featuredRow');
+  wrap.innerHTML = featured.map(p=>`
+    <div class="feat-card">
+      <div class="icon-wrap">${ICONS[p.icon]}</div>
+      <div class="pname">${p.name}</div>
+      <div class="pprice">${formatSom(p.price)}</div>
+      <button class="mini-add" onclick="addToCart(${p.id})">Qo'shish</button>
+    </div>
+  `).join('');
+}
+
+/* ---------------- Rendering: catalog ---------------- */
+function renderCatalogChips(){
+  const wrap = document.getElementById('catalogCategoryChips');
+  const chips = [{id:'all', name:'Barchasi'}, ...CATEGORIES];
+  wrap.innerHTML = chips.map(c=>
+    `<button class="chip ${activeCategory===c.id?'active':''}" onclick="setActiveCategory('${c.id}')">${c.name}</button>`
+  ).join('');
+}
+function setActiveCategory(id){
+  activeCategory = id;
+  renderCatalog();
+}
+function productCardHtml(p){
+  const qty = cart[p.id] || 0;
+  const catName = CATEGORIES.find(c=>c.id===p.cat).name;
+  const stock = stockData[p.id];
+  const outOfStock = stockLoaded && stock !== undefined && stock <= 0;
+  const atStockLimit = stockLoaded && stock !== undefined && qty >= stock;
+  return `
+      <div class="card">
+        <div class="icon-wrap">${ICONS[p.icon]}</div>
+        <div class="pcat">${catName}</div>
+        <div class="pname">${p.name}</div>
+        <div class="pprice">${formatSom(p.price)}</div>
+        ${outOfStock ? `
+          <div class="out-of-stock">Tugagan</div>
+        ` : qty>0 ? `
+          <div class="stepper">
+            <button onclick="changeQty(${p.id}, -1)" aria-label="Kamaytirish">−</button>
+            <span>${qty}</span>
+            <button onclick="changeQty(${p.id}, 1)" ${atStockLimit ? 'disabled' : ''} aria-label="Ko'paytirish">+</button>
+          </div>
+        ` : `<button class="add-btn" onclick="addToCart(${p.id})">Savatga qo'shish</button>`}
+      </div>
+    `;
+}
+function renderCatalog(){
+  renderCatalogChips();
+  const titleEl = document.getElementById('catalogTitle');
+  if(titleEl){
+    titleEl.textContent = activeCategory==='all' ? 'Barcha mahsulotlar' : (CATEGORIES.find(c=>c.id===activeCategory)?.name || 'Toifa');
+  }
+  const query = (document.getElementById('searchInput').value || '').toLowerCase().trim();
+  const grid = document.getElementById('catalogGrid');
+
+  // Flat view: "Barchasi" or an active search query
+  if(activeCategory==='all' || query){
+    const items = PRODUCTS.filter(p=>{
+      const matchCat = activeCategory==='all' || p.cat===activeCategory;
+      const matchQuery = !query || p.name.toLowerCase().includes(query);
+      return matchCat && matchQuery;
+    });
+    if(items.length===0){
+      grid.innerHTML = `<div class="empty-note" style="grid-column:1/-1;">Hech narsa topilmadi. Boshqa so'z bilan qidirib ko'ring.</div>`;
+      return;
+    }
+    grid.innerHTML = items.map(productCardHtml).join('');
+    return;
+  }
+
+  // Grouped-by-subcategory view for a specific category
+  const catProducts = PRODUCTS.filter(p=>p.cat===activeCategory);
+  const subcatList = SUBCATS[activeCategory] || [];
+  const seen = new Set();
+  let html = '';
+  subcatList.forEach(sc=>{
+    seen.add(sc);
+    const items = catProducts.filter(p=>p.subcat===sc);
+    html += `<div class="subcat-heading">${sc}</div>`;
+    if(items.length===0){
+      html += `<div class="empty-note subcat-empty">Hozircha mahsulot yo'q</div>`;
+    } else {
+      html += `<div class="grid">${items.map(productCardHtml).join('')}</div>`;
+    }
+  });
+  // Any product whose subcat isn't in the official list yet
+  const leftover = catProducts.filter(p=>!seen.has(p.subcat));
+  if(leftover.length){
+    html += `<div class="subcat-heading">Boshqalar</div><div class="grid">${leftover.map(productCardHtml).join('')}</div>`;
+  }
+  grid.outerHTML = `<div id="catalogGrid">${html}</div>`;
+}
+
+/* ---------------- Cart actions ---------------- */
+function addToCart(id){
+  const stock = stockData[id];
+  if(stockLoaded && stock !== undefined && stock <= 0){
+    showToast("Bu mahsulot tugagan");
+    return;
+  }
+  cart[id] = (cart[id]||0) + 1;
+  updateBadges();
+  renderCatalog();
+  updateMainButton();
+  showToast("Savatga qo'shildi");
+  tg && tg.HapticFeedback.impactOccurred('light');
+}
+function changeQty(id, delta){
+  if(!cart[id]) return;
+  const stock = stockData[id];
+  if(delta > 0 && stockLoaded && stock !== undefined && cart[id] >= stock){
+    showToast("Omborda shuncha qoldi: " + stock);
+    return;
+  }
+  cart[id] += delta;
+  if(cart[id] <= 0) delete cart[id];
+  updateBadges();
+  renderCatalog();
+  renderCart();
+  updateMainButton();
+}
+function removeFromCart(id){
+  delete cart[id];
+  updateBadges();
+  renderCart();
+  renderCatalog();
+  updateMainButton();
+}
+
+/* ---------------- Rendering: cart view ---------------- */
+function renderCart(){
+  const wrap = document.getElementById('cartContent');
+  const ids = Object.keys(cart);
+  if(ids.length===0){
+    wrap.innerHTML = `
+      <div class="empty-note">
+        Savat hozircha bo'sh.<br>Kerakli narsalarni tanlang.
+      </div>
+      <button class="add-btn" onclick="showView('categories')">Toifalarga o'tish</button>
+    `;
+    return;
+  }
+  const rows = ids.map(id=>{
+    const p = PRODUCTS.find(p=>p.id==id);
+    const qty = cart[id];
+    return `
+      <div class="cart-row">
+        <div class="icon-wrap">${ICONS[p.icon]}</div>
+        <div class="info">
+          <div class="pname">${p.name}</div>
+          <div class="pprice">${formatSom(p.price)} × ${qty}</div>
+        </div>
+        <div class="stepper">
+          <button onclick="changeQty(${p.id}, -1)" aria-label="Kamaytirish">−</button>
+          <span>${qty}</span>
+          <button onclick="changeQty(${p.id}, 1)" aria-label="Ko'paytirish">+</button>
+        </div>
+        <button class="remove" onclick="removeFromCart(${p.id})">O'chirish</button>
+      </div>
+    `;
+  }).join('');
+
+  wrap.innerHTML = `
+    ${rows}
+    <div class="totals">
+      <span class="label">Jami summa</span>
+      <span class="value">${formatSom(cartTotal())}</span>
+    </div>
+    <div class="form-block">
+      <label>Yetkazib berish usuli</label>
+      <div class="method-row" id="deliveryRow">
+        <button type="button" class="method-btn ${deliveryMethod==='pickup'?'active':''}" data-value="pickup" onclick="setDeliveryMethod('pickup')">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-6 9 6"></path><path d="M4 10v9h16v-9"></path><path d="M9 19v-6h6v6"></path></svg>
+          O'zim olib ketaman
+        </button>
+        <button type="button" class="method-btn ${deliveryMethod==='delivery'?'active':''}" data-value="delivery" onclick="setDeliveryMethod('delivery')">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 7h11v9H3z"></path><path d="M14 10h4l3 3v3h-7z"></path><circle cx="7" cy="18" r="1.6"></circle><circle cx="18" cy="18" r="1.6"></circle></svg>
+          Yetkazib berish
+        </button>
+      </div>
+
+      <label>To'lov usuli</label>
+      <div class="method-row" id="paymentRow">
+        <button type="button" class="method-btn ${paymentMethod==='cash'?'active':''}" data-value="cash" onclick="setPaymentMethod('cash')">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="6" width="20" height="12" rx="2"></rect><circle cx="12" cy="12" r="3"></circle></svg>
+          Naqd pul
+        </button>
+        <button type="button" class="method-btn ${paymentMethod==='card'?'active':''}" data-value="card" onclick="setPaymentMethod('card')">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="5" width="20" height="14" rx="2"></rect><path d="M2 10h20"></path></svg>
+          Karta orqali
+        </button>
+      </div>
+
+      <label for="custName">Ismingiz</label>
+      <input type="text" id="custName" placeholder="Ism familiyangiz">
+      <label for="custPhone">Telefon raqamingiz</label>
+      <input type="tel" id="custPhone" placeholder="+998 90 123 45 67">
+      <label for="custAddress" id="addressLabel">${deliveryMethod==='pickup' ? "Manzil (ixtiyoriy)" : "Yetkazib berish manzili"}</label>
+      <textarea id="custAddress" rows="2" placeholder="Shahar, tuman, mo'ljal"></textarea>
+      <div id="locationBlock" style="${deliveryMethod==='pickup' ? 'display:none;' : ''}">
+        <button type="button" class="location-btn" id="locationBtn" onclick="shareLocation()">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s-7-6.2-7-11a7 7 0 0 1 14 0c0 4.8-7 11-7 11z"></path><circle cx="12" cy="10" r="2.5"></circle></svg>
+          <span id="locationBtnText">Joylashuvni ulash (ixtiyoriy)</span>
+        </button>
+      </div>
+      <div class="field-hint" id="addressHint" style="${deliveryMethod==='pickup' ? '' : 'display:none;'}">Do'kon manzili: [manzilingizni shu yerga yozib qo'ying]</div>
+    </div>
+    <button class="order-btn" onclick="sendOrder()">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 2L11 13"></path><path d="M22 2l-7 20-4-9-9-4 20-7z"></path></svg>
+      Telegram orqali buyurtma berish
+    </button>
+    <button class="copy-btn" onclick="copyOrderText()">Buyurtma matnini nusxalash</button>
+    <div class="form-note">Tugmani bosganda Telegram ochiladi va buyurtma matni tayyor holda @${TELEGRAM_USERNAME} ga yuborish uchun qo'yiladi.</div>
+  `;
+}
+
+function setDeliveryMethod(val){
+  deliveryMethod = val;
+  document.querySelectorAll('#deliveryRow .method-btn').forEach(b=>{
+    b.classList.toggle('active', b.dataset.value===val);
+  });
+  document.getElementById('addressLabel').textContent = val==='pickup' ? "Manzil (ixtiyoriy)" : "Yetkazib berish manzili";
+  document.getElementById('addressHint').style.display = val==='pickup' ? '' : 'none';
+  document.getElementById('locationBlock').style.display = val==='pickup' ? 'none' : '';
+  tg && tg.HapticFeedback.selectionChanged();
+}
+function shareLocation(){
+  if(!navigator.geolocation){
+    showToast("Bu qurilmada joylashuv aniqlanmaydi");
+    return;
+  }
+  const btn = document.getElementById('locationBtn');
+  const btnText = document.getElementById('locationBtnText');
+  btnText.textContent = "Aniqlanmoqda...";
+  navigator.geolocation.getCurrentPosition(
+    (pos) => {
+      customerLocation = { lat: pos.coords.latitude, lng: pos.coords.longitude };
+      btn.classList.add('confirmed');
+      btnText.textContent = "✅ Joylashuv ulandi";
+      tg && tg.HapticFeedback.notificationOccurred('success');
+    },
+    () => {
+      btnText.textContent = "Joylashuvni ulash (ixtiyoriy)";
+      showToast("Joylashuvga ruxsat berilmadi");
+      tg && tg.HapticFeedback.notificationOccurred('error');
+    },
+    { enableHighAccuracy: true, timeout: 10000 }
+  );
+}
+function setPaymentMethod(val){
+  paymentMethod = val;
+  document.querySelectorAll('#paymentRow .method-btn').forEach(b=>{
+    b.classList.toggle('active', b.dataset.value===val);
+  });
+  tg && tg.HapticFeedback.selectionChanged();
+}
+
+/* ---------------- Order building ---------------- */
+function buildOrderText(){
+  const name = document.getElementById('custName').value.trim();
+  const phone = document.getElementById('custPhone').value.trim();
+  const address = document.getElementById('custAddress').value.trim();
+  const deliveryLabel = deliveryMethod==='pickup' ? "O'zim olib ketaman" : "Yetkazib berish";
+  const paymentLabel = paymentMethod==='card' ? "Karta orqali" : "Naqd pul";
+
+  const lines = Object.keys(cart).map(id=>{
+    const p = PRODUCTS.find(p=>p.id==id);
+    const qty = cart[id];
+    return `• ${p.name} x${qty} — ${formatSom(p.price*qty)}`;
+  });
+
+  const addressLine = deliveryMethod==='pickup'
+    ? (address ? `Manzil (izoh): ${address}` : `Manzil: — (o'zi olib ketadi)`)
+    : `Manzil: ${address || '—'}`;
+  const locationLine = (deliveryMethod==='delivery' && customerLocation)
+    ? `\nJoylashuv: https://maps.google.com/?q=${customerLocation.lat},${customerLocation.lng}`
+    : '';
+
+  return {
+    valid: !!(name && phone && (deliveryMethod==='pickup' || address)),
+    text:
+`Yangi buyurtma — Eshonguzar M34
+
+Mijoz: ${name || '—'}
+Telefon: ${phone || '—'}
+Yetkazib berish: ${deliveryLabel}
+To'lov: ${paymentLabel}
+${addressLine}${locationLine}
+
+Mahsulotlar:
+${lines.join('\n')}
+
+Jami: ${formatSom(cartTotal())}`
+  };
+}
+
+function sendOrder(){
+  const order = buildOrderText();
+  if(!order.valid){
+    showToast("Ism, telefon va manzilni to'ldiring");
+    tg && tg.HapticFeedback.notificationOccurred('error');
+    return;
+  }
+  const purchased = { ...cart };
+  const itemsSummary = Object.keys(purchased).map(id=>{
+    const p = PRODUCTS.find(p=>p.id==id);
+    return `${p.name} x${purchased[id]}`;
+  }).join(', ');
+
+  tg && tg.MainButton.showProgress(false);
+  fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ chat_id: OWNER_CHAT_ID, text: order.text })
+  })
+  .then(res => res.json())
+  .then(data => {
+    tg && tg.MainButton.hideProgress();
+    if (data.ok) {
+      tg && tg.HapticFeedback.notificationOccurred('success');
+      showToast("Buyurtma yuborildi! ✅");
+
+      // Log order + decrement stock in Google Sheets (best-effort, doesn't block UI)
+      fetch(SHEETS_API_URL, {
+        method: 'POST',
+        body: JSON.stringify({
+          name: document.getElementById('custName').value.trim(),
+          phone: document.getElementById('custPhone').value.trim(),
+          address: document.getElementById('custAddress').value.trim(),
+          items: itemsSummary,
+          total: cartTotal(),
+          purchased: purchased
+        })
+      }).then(()=>{
+        Object.keys(purchased).forEach(id=>{
+          if(stockData[id] !== undefined) stockData[id] = Math.max(0, stockData[id] - purchased[id]);
+        });
+      }).catch(()=>{});
+
+      cart = {};
+      customerLocation = null;
+      updateBadges();
+      renderCart();
+      renderCatalog();
+      updateMainButton();
+    } else {
+      throw new Error(data.description || 'send failed');
+    }
+  })
+  .catch(() => {
+    tg && tg.MainButton.hideProgress();
+    // Fallback: copy the order text and open the chat manually
+    navigator.clipboard && navigator.clipboard.writeText(order.text).catch(()=>{});
+    tg && tg.HapticFeedback.notificationOccurred('warning');
+    showToast("Avtomatik yuborilmadi, chat ochilyapti...");
+    openTelegramChat();
+  });
+}
+
+function copyOrderText(){
+  const order = buildOrderText();
+  navigator.clipboard.writeText(order.text).then(()=>{
+    showToast("Nusxalandi");
+  }).catch(()=>{
+    showToast("Nusxalab bo'lmadi");
+  });
+}
+
+function loadStock(){
+  fetch(SHEETS_API_URL)
+    .then(res => res.json())
+    .then(data => {
+      stockData = data;
+      stockLoaded = true;
+      renderFeatured();
+      renderCatalog();
+    })
+    .catch(()=>{ /* ombor yuklanmasa, cheklovsiz ishlayveradi */ });
+}
+
+/* ---------------- Init ---------------- */
+renderHomeChips();
+renderFeatured();
+renderCatalog();
+updateBadges();
+updateMainButton();
+loadStock();
+</script>
+
+</body>
+</html>
