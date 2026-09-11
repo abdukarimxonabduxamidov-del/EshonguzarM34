@@ -6,169 +6,173 @@
 <title>Dashboard — Eshonguzar M34</title>
 <style>
   :root{
-    --bg:#F2F4F1;
+    --bg:#F4F6F8;
     --surface:#FFFFFF;
     --ink:#1C2420;
-    --ink-soft:#4B564F;
+    --ink-soft:#5A6A64;
     --teal:#1F4B49;
     --teal-light:#2F6B66;
-    --teal-wash:#E4ECEA;
+    --teal-wash:#EAF2F0;
     --amber:#D9A441;
     --amber-dark:#B9832B;
-    --amber-wash:#FBF0DA;
-    --sage:#90A99E;
-    --brick:#B14B3A;
-    --green:#3F7D5B;
-    --line:#DDE4DF;
-    --radius-card:14px;
-    --shadow-card: 0 1px 2px rgba(28,36,32,0.06), 0 1px 1px rgba(28,36,32,0.04);
+    --amber-wash:#FDF8EC;
+    --green:#2E7D32;
+    --green-wash:#E8F5E9;
+    --brick:#C62828;
+    --brick-wash:#FFEBEE;
+    --line:#E0E6E4;
+    --radius:12px;
+    --shadow: 0 4px 12px rgba(0,0,0,0.05);
   }
-  *{box-sizing:border-box;}
+  *{box-sizing:border-box; margin:0; padding:0;}
   body{
-    margin:0; font-family:'Segoe UI', Roboto, Arial, sans-serif;
+    font-family:'Segoe UI', Roboto, -apple-system, sans-serif;
     background:var(--bg); color:var(--ink); min-height:100vh;
   }
 
-  /* ---------- Login screen ---------- */
-  #loginScreen{
-    min-height:100vh; display:flex; align-items:center; justify-content:center; padding:20px;
-  }
+  /* Login */
+  #loginScreen{ min-height:100vh; display:flex; align-items:center; justify-content:center; padding:20px; }
   .login-card{
-    background:var(--surface); border-radius:var(--radius-card); box-shadow:var(--shadow-card);
-    border:1px solid var(--line); padding:28px 24px; width:100%; max-width:340px; text-align:center;
+    background:var(--surface); border-radius:var(--radius); box-shadow:var(--shadow);
+    border:1px solid var(--line); padding:32px 24px; width:100%; max-width:360px; text-align:center;
   }
-  .login-card h2{margin:0 0 4px; color:var(--teal); font-size:19px;}
-  .login-card p{color:var(--ink-soft); font-size:13px; margin:0 0 18px;}
+  .login-card h2{ color:var(--teal); font-size:22px; margin-bottom:6px; }
+  .login-card p{ color:var(--ink-soft); font-size:13px; margin-bottom:20px; }
   .login-card input{
-    width:100%; padding:12px 14px; border-radius:10px; border:1px solid var(--line);
-    font-size:15px; margin-bottom:12px; text-align:center; letter-spacing:2px;
+    width:100%; padding:12px; border-radius:8px; border:1px solid var(--line);
+    font-size:16px; text-align:center; margin-bottom:14px; outline:none;
   }
   .login-card button{
-    width:100%; padding:12px; border:none; border-radius:10px; background:var(--teal);
-    color:#fff; font-weight:700; font-size:14.5px; cursor:pointer;
+    width:100%; padding:12px; border:none; border-radius:8px; background:var(--teal);
+    color:#fff; font-weight:700; font-size:15px; cursor:pointer; transition:0.2s;
   }
-  .login-err{color:var(--brick); font-size:12.5px; margin-top:10px; display:none;}
+  .login-card button:hover{ background:var(--teal-light); }
+  .login-err{ color:var(--brick); font-size:13px; margin-top:12px; display:none; }
 
-  /* ---------- App shell ---------- */
-  #app{display:none; min-height:100vh;}
-
+  /* App Shell */
+  #app{ display:none; min-height:100vh; }
   header{
-    background:var(--teal); color:#fff; padding:14px 18px;
+    background:var(--teal); color:#fff; padding:14px 20px;
     display:flex; align-items:center; justify-content:space-between;
-    position:sticky; top:0; z-index:20;
+    position:sticky; top:0; z-index:100; box-shadow: 0 2px 8px rgba(0,0,0,0.1);
   }
-  header h1{font-size:16px; margin:0; font-weight:700;}
-  header .sub{font-size:11px; color:#cfe1de; margin-top:2px;}
+  header h1{ font-size:18px; font-weight:700; }
+  header .sub{ font-size:11px; opacity:0.8; }
   #logoutBtn{
-    background:rgba(255,255,255,0.12); border:1px solid rgba(255,255,255,0.3); color:#fff;
-    padding:7px 12px; border-radius:8px; font-size:12px; cursor:pointer; flex-shrink:0;
+    background:rgba(255,255,255,0.15); border:1px solid rgba(255,255,255,0.3); color:#fff;
+    padding:6px 14px; border-radius:6px; font-size:12px; cursor:pointer; font-weight:600;
   }
 
   nav.tabbar{
-    display:flex; gap:4px; background:var(--surface); border-bottom:1px solid var(--line);
-    padding:6px 10px; overflow-x:auto; position:sticky; top:57px; z-index:19;
+    display:flex; gap:6px; background:var(--surface); border-bottom:1px solid var(--line);
+    padding:8px 16px; overflow-x:auto; position:sticky; top:58px; z-index:99;
   }
   nav.tabbar button{
-    padding:9px 13px; border:none; background:transparent; border-radius:9px;
-    font-size:12.5px; font-weight:600; color:var(--ink-soft); cursor:pointer; white-space:nowrap;
-    display:flex; align-items:center; gap:6px;
+    padding:10px 16px; border:none; background:transparent; border-radius:8px;
+    font-size:13px; font-weight:600; color:var(--ink-soft); cursor:pointer; white-space:nowrap;
   }
-  nav.tabbar button.active{background:var(--teal-wash); color:var(--teal);}
+  nav.tabbar button.active{ background:var(--teal-wash); color:var(--teal); }
 
-  main{max-width:920px; margin:0 auto; padding:16px;}
-  .panel{display:none;}
-  .panel.active{display:block;}
-  .empty{text-align:center; color:var(--ink-soft); font-size:13.5px; padding:40px 10px;}
+  main{ max-width:960px; margin:0 auto; padding:20px 16px; }
+  .panel{ display:none; }
+  .panel.active{ display:block; }
+  .empty{ text-align:center; color:var(--ink-soft); font-size:14px; padding:40px 10px; }
 
-  .toolbar{display:flex; gap:8px; margin-bottom:14px; align-items:center;}
-  .toolbar input[type=text]{
-    flex:1; padding:10px 12px; border-radius:10px; border:1px solid var(--line); font-size:13.5px;
+  .toolbar{ display:flex; gap:10px; margin-bottom:16px; align-items:center; flex-wrap:wrap; }
+  .toolbar input, .toolbar select{
+    padding:10px 14px; border-radius:8px; border:1px solid var(--line); font-size:13.5px; outline:none; background:#fff;
   }
+  .toolbar input[type=text]{ flex:1; min-width:200px; }
   .toolbar button{
-    padding:10px 14px; border-radius:10px; border:1px solid var(--line); background:var(--surface);
+    padding:10px 16px; border-radius:8px; border:1px solid var(--line); background:var(--surface);
     font-size:13px; font-weight:600; cursor:pointer; color:var(--teal); white-space:nowrap;
   }
+  .btn-primary{ background:var(--teal) !important; color:#fff !important; border:none !important; }
 
-  /* ---------- Dashboard stats ---------- */
-  .stats-grid{display:grid; grid-template-columns:repeat(2,1fr); gap:10px; margin-bottom:18px;}
+  /* Dashboard Cards */
+  .stats-grid{ display:grid; grid-template-columns:repeat(auto-fit, minmax(180px, 1fr)); gap:12px; margin-bottom:20px; }
   .stat-card{
-    background:var(--surface); border:1px solid var(--line); border-radius:var(--radius-card);
-    box-shadow:var(--shadow-card); padding:14px;
+    background:var(--surface); border:1px solid var(--line); border-radius:var(--radius);
+    padding:16px; box-shadow:var(--shadow);
   }
-  .stat-card .label{font-size:11.5px; color:var(--ink-soft); margin-bottom:6px;}
-  .stat-card .value{font-size:19px; font-weight:800; color:var(--teal);}
-  .stat-card.amber .value{color:var(--amber-dark);}
-  .stat-card.brick .value{color:var(--brick);}
-  .section-title{font-size:14.5px; font-weight:700; margin:20px 0 10px; color:var(--ink);}
-  .rank-list{background:var(--surface); border:1px solid var(--line); border-radius:var(--radius-card); box-shadow:var(--shadow-card); overflow:hidden;}
-  .rank-row{display:flex; align-items:center; gap:10px; padding:11px 14px; border-bottom:1px solid var(--line); font-size:13px;}
-  .rank-row:last-child{border-bottom:none;}
-  .rank-num{width:20px; height:20px; border-radius:50%; background:var(--teal-wash); color:var(--teal); font-size:11px; font-weight:700; display:flex; align-items:center; justify-content:center; flex-shrink:0;}
-  .rank-name{flex:1;}
-  .rank-qty{font-weight:700; color:var(--ink-soft); font-size:12px;}
-  .low-row .rank-num{background:#F7E4E0; color:var(--brick);}
+  .stat-card .label{ font-size:12px; color:var(--ink-soft); margin-bottom:6px; }
+  .stat-card .value{ font-size:20px; font-weight:800; color:var(--teal); }
+  .stat-card.amber .value{ color:var(--amber-dark); }
+  .stat-card.brick .value{ color:var(--brick); }
 
-  /* ---------- Orders ---------- */
+  .section-title{ font-size:15px; font-weight:700; margin:24px 0 12px; color:var(--ink); }
+  .rank-list{ background:var(--surface); border:1px solid var(--line); border-radius:var(--radius); box-shadow:var(--shadow); overflow:hidden; }
+  .rank-row{ display:flex; align-items:center; gap:12px; padding:12px 16px; border-bottom:1px solid var(--line); font-size:13px; }
+  .rank-row:last-child{ border-bottom:none; }
+  .rank-num{ width:24px; height:24px; border-radius:50%; background:var(--teal-wash); color:var(--teal); font-size:11px; font-weight:700; display:flex; align-items:center; justify-content:center; }
+  .rank-name{ flex:1; font-weight:600; }
+  .rank-qty{ font-weight:700; color:var(--ink-soft); font-size:12.5px; }
+
+  /* Orders */
   .order-card{
-    background:var(--surface); border:1px solid var(--line); border-radius:var(--radius-card);
-    box-shadow:var(--shadow-card); padding:14px 16px; margin-bottom:12px;
+    background:var(--surface); border:1px solid var(--line); border-radius:var(--radius);
+    box-shadow:var(--shadow); padding:16px; margin-bottom:14px;
   }
-  .order-top{display:flex; justify-content:space-between; align-items:flex-start; gap:8px; margin-bottom:8px;}
-  .order-top .cust{font-weight:700; font-size:14.5px;}
-  .order-top .time{font-size:11px; color:var(--ink-soft); margin-top:2px;}
-  .status-badge{font-size:11px; font-weight:700; padding:4px 10px; border-radius:999px; white-space:nowrap;}
-  .status-yangi{background:var(--amber-wash); color:var(--amber-dark);}
-  .status-jarayonda{background:#E4ECEA; color:var(--teal);}
-  .status-yetkazildi{background:#E3F2E8; color:var(--green);}
-  .status-bekor{background:#F7E4E0; color:var(--brick);}
-  .order-info{font-size:12.5px; color:var(--ink-soft); margin-bottom:8px; line-height:1.6;}
-  .order-info b{color:var(--ink);}
-  .order-items{border-top:1px dashed var(--line); border-bottom:1px dashed var(--line); padding:8px 0; margin-bottom:10px;}
-  .order-items div{font-size:12.5px; display:flex; justify-content:space-between; padding:2px 0;}
-  .order-total{font-weight:700; font-size:14px; text-align:right; margin-bottom:10px;}
-  .status-row{display:flex; gap:6px; flex-wrap:wrap;}
+  .order-top{ display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:10px; }
+  .order-top .cust{ font-weight:700; font-size:15px; }
+  .order-top .time{ font-size:11.5px; color:var(--ink-soft); margin-top:2px; }
+  .status-badge{ font-size:11px; font-weight:700; padding:4px 10px; border-radius:20px; }
+  .status-yangi{ background:var(--amber-wash); color:var(--amber-dark); }
+  .status-jarayonda{ background:var(--teal-wash); color:var(--teal); }
+  .status-yetkazildi{ background:var(--green-wash); color:var(--green); }
+  .status-bekor{ background:var(--brick-wash); color:var(--brick); }
+  
+  .order-info{ font-size:13px; color:var(--ink-soft); margin-bottom:10px; line-height:1.5; }
+  .order-items{ border-top:1px dashed var(--line); border-bottom:1px dashed var(--line); padding:10px 0; margin-bottom:10px; }
+  .order-items div{ font-size:13px; display:flex; justify-content:space-between; padding:3px 0; }
+  .order-total{ font-weight:800; font-size:15px; text-align:right; margin-bottom:12px; color:var(--teal); }
+  
+  .status-row{ display:flex; gap:6px; flex-wrap:wrap; }
   .status-row button{
-    flex:1; min-width:80px; padding:8px 6px; border-radius:8px; border:1px solid var(--line);
-    background:var(--surface); font-size:11.5px; font-weight:600; cursor:pointer; color:var(--ink-soft);
+    flex:1; min-width:80px; padding:8px; border-radius:6px; border:1px solid var(--line);
+    background:#fff; font-size:12px; font-weight:600; cursor:pointer; color:var(--ink-soft);
   }
-  .status-row button.current{border-color:var(--teal); color:var(--teal); background:var(--teal-wash);}
+  .status-row button.current{ border-color:var(--teal); color:var(--teal); background:var(--teal-wash); }
 
-  /* ---------- Products ---------- */
+  /* Products */
   .prod-card{
-    background:var(--surface); border:1px solid var(--line); border-radius:var(--radius-card);
-    box-shadow:var(--shadow-card); padding:12px 14px; margin-bottom:10px;
+    background:var(--surface); border:1px solid var(--line); border-radius:var(--radius);
+    box-shadow:var(--shadow); padding:14px 16px; margin-bottom:12px;
   }
-  .prod-top{display:flex; justify-content:space-between; gap:8px; margin-bottom:10px;}
-  .prod-name{font-weight:700; font-size:13.5px;}
-  .prod-cat{font-size:11px; color:var(--sage);}
-  .prod-fields{display:grid; grid-template-columns:1fr 1fr 1fr; gap:8px;}
-  .field{display:flex; flex-direction:column; gap:4px;}
-  .field label{font-size:10.5px; color:var(--ink-soft); font-weight:600;}
-  .field input{padding:8px 9px; border-radius:8px; border:1px solid var(--line); font-size:13px; width:100%;}
-  .prod-save{margin-top:10px; width:100%; padding:9px; border:none; border-radius:8px; background:var(--teal); color:#fff; font-weight:700; font-size:12.5px; cursor:pointer;}
-  .save-ok{color:var(--green); font-size:11.5px; margin-top:6px; display:none; text-align:center;}
-  .low{color:var(--brick); font-weight:700;}
-  .refresh-note{text-align:center; font-size:11.5px; color:var(--ink-soft); margin:6px 0 14px;}
+  .prod-top{ display:flex; justify-content:space-between; align-items:center; margin-bottom:12px; }
+  .prod-name{ font-weight:700; font-size:14px; }
+  .prod-cat{ font-size:11.5px; color:var(--ink-soft); }
+  .prod-fields{ display:grid; grid-template-columns:repeat(auto-fit, minmax(100px, 1fr)); gap:10px; }
+  .field{ display:flex; flex-direction:column; gap:4px; }
+  .field label{ font-size:11px; color:var(--ink-soft); font-weight:600; }
+  .field input{ padding:8px 10px; border-radius:6px; border:1px solid var(--line); font-size:13px; width:100%; outline:none; }
+  
+  .prod-actions{ display:flex; gap:8px; margin-top:12px; }
+  .prod-save{ flex:1; padding:9px; border:none; border-radius:6px; background:var(--teal); color:#fff; font-weight:700; font-size:12.5px; cursor:pointer; }
+  .prod-del{ padding:9px 14px; border:none; border-radius:6px; background:var(--brick-wash); color:var(--brick); font-weight:700; font-size:12.5px; cursor:pointer; }
 
-  /* ---------- Broadcast ---------- */
+  /* Broadcast */
   .broadcast-card{
-    background:var(--surface); border:1px solid var(--line); border-radius:var(--radius-card);
-    box-shadow:var(--shadow-card); padding:16px;
+    background:var(--surface); border:1px solid var(--line); border-radius:var(--radius);
+    box-shadow:var(--shadow); padding:20px;
   }
-  .broadcast-card textarea{
-    width:100%; min-height:120px; padding:12px; border-radius:10px; border:1px solid var(--line);
-    font-size:14px; font-family:inherit; resize:vertical;
+  .broadcast-card input, .broadcast-card textarea{
+    width:100%; padding:12px; border-radius:8px; border:1px solid var(--line);
+    font-size:13.5px; font-family:inherit; margin-bottom:12px; outline:none;
   }
-  .subs-count{font-size:12.5px; color:var(--ink-soft); margin:10px 0 14px;}
-  .subs-count b{color:var(--teal);}
+  .broadcast-card textarea{ min-height:120px; resize:vertical; }
   .broadcast-send{
-    width:100%; padding:12px; border:none; border-radius:10px; background:var(--amber);
+    width:100%; padding:12px; border:none; border-radius:8px; background:var(--amber);
     color:var(--teal); font-weight:800; font-size:14px; cursor:pointer;
   }
-  .broadcast-send:disabled{opacity:0.6; cursor:default;}
-  .broadcast-result{margin-top:12px; font-size:12.5px; text-align:center; padding:10px; border-radius:8px; display:none;}
-  .broadcast-result.ok{display:block; background:#E3F2E8; color:var(--green);}
-  .broadcast-result.err{display:block; background:#F7E4E0; color:var(--brick);}
+  
+  /* Modal */
+  .modal-bg{ display:none; position:fixed; inset:0; background:rgba(0,0,0,0.4); z-index:200; align-items:center; justify-content:center; padding:16px; }
+  .modal{ background:#fff; border-radius:var(--radius); padding:20px; width:100%; max-width:420px; box-shadow:var(--shadow); }
+  .modal h3{ margin-bottom:14px; color:var(--teal); font-size:16px; }
+  .modal input, .modal select{ width:100%; padding:10px; border-radius:6px; border:1px solid var(--line); margin-bottom:10px; font-size:13px; outline:none; }
+  .modal-btns{ display:flex; gap:8px; margin-top:10px; }
+  .modal-btns button{ flex:1; padding:10px; border-radius:6px; border:none; font-weight:700; cursor:pointer; font-size:13px; }
 </style>
 </head>
 <body>
@@ -177,7 +181,7 @@
 <div id="loginScreen">
   <div class="login-card">
     <h2>Boshqaruv paneli</h2>
-    <p>Eshonguzar M34 — davom etish uchun parolni kiriting</p>
+    <p>Eshonguzar M34 davom etish uchun parolni kiriting</p>
     <input type="password" id="passInput" placeholder="Parol" maxlength="20">
     <button onclick="tryLogin()">Kirish</button>
     <div class="login-err" id="loginErr">Parol noto'g'ri</div>
@@ -210,7 +214,17 @@
 
     <!-- ORDERS PANEL -->
     <section class="panel" id="panel-orders">
-      <div class="toolbar"><button onclick="loadOrders()">↻ Yangilash</button></div>
+      <div class="toolbar">
+        <input type="text" id="orderSearch" placeholder="Ism yoki telefon bo'yicha qidirish..." oninput="renderOrders()">
+        <select id="orderStatusFilter" onchange="renderOrders()">
+          <option value="all">Barcha holatlar</option>
+          <option value="yangi">Yangi</option>
+          <option value="jarayonda">Jarayonda</option>
+          <option value="yetkazildi">Yetkazildi</option>
+          <option value="bekor">Bekor qilingan</option>
+        </select>
+        <button onclick="loadOrders()">↻ Yangilash</button>
+      </div>
       <div id="ordersList"><div class="empty">Yuklanmoqda…</div></div>
     </section>
 
@@ -218,9 +232,9 @@
     <section class="panel" id="panel-products">
       <div class="toolbar">
         <input type="text" id="prodSearch" placeholder="Mahsulot nomini qidirish..." oninput="renderProducts()">
+        <button class="btn-primary" onclick="openAddProductModal()">+ Yangi mahsulot</button>
         <button onclick="loadProducts()">↻ Yangilash</button>
       </div>
-      <div class="refresh-note">Narx, chegirma (%) yoki zaxirani o'zgartirib, "Saqlash" tugmasini bosing — o'zgarish darhol saytda ko'rinadi.</div>
       <div id="productsList"><div class="empty">Yuklanmoqda…</div></div>
     </section>
 
@@ -228,37 +242,48 @@
     <section class="panel" id="panel-broadcast">
       <div class="broadcast-card">
         <div class="section-title" style="margin-top:0;">Barcha mijozlarga xabar yuborish</div>
-        <div class="subs-count">Ro'yxatda: <b id="subsCount">—</b> ta mijoz (ilovani kamida bir marta ochganlar)</div>
-        <textarea id="broadcastText" placeholder="Xabar matnini shu yerga yozing (masalan: aksiya, yangi mahsulot haqida e'lon)..."></textarea>
-        <br><br>
+        <div style="font-size:13px; color:var(--ink-soft); margin-bottom:12px;">Ro'yxatda: <b id="subsCount" style="color:var(--teal)">—</b> ta mijoz</div>
+        <textarea id="broadcastText" placeholder="Xabar matni..."></textarea>
+        <input type="text" id="broadcastImg" placeholder="Rasm URL havolasi (ixtiyoriy)">
+        <input type="text" id="broadcastBtnText" placeholder="Tugma matni (ixtiyoriy)">
+        <input type="text" id="broadcastBtnUrl" placeholder="Tugma havolasi (ixtiyoriy)">
         <button class="broadcast-send" id="broadcastBtn" onclick="sendBroadcast()">Hammaga yuborish</button>
-        <div class="broadcast-result" id="broadcastResult"></div>
+        <div id="broadcastResult" style="margin-top:12px; font-size:13px; text-align:center;"></div>
       </div>
     </section>
   </main>
 </div>
 
+<!-- MODAL: Yangi mahsulot -->
+<div class="modal-bg" id="addProductModal">
+  <div class="modal">
+    <h3>Yangi mahsulot qo'shish</h3>
+    <input type="text" id="newProdName" placeholder="Mahsulot nomi">
+    <select id="newProdCat"></select>
+    <input type="number" id="newProdPrice" placeholder="Narxi (so'm)">
+    <input type="number" id="newProdStock" placeholder="Zaxirasi (dona)" value="10">
+    <div class="modal-btns">
+      <button style="background:var(--line);" onclick="closeAddProductModal()">Bekor qilish</button>
+      <button class="btn-primary" onclick="saveNewProduct()">Saqlash</button>
+    </div>
+  </div>
+</div>
+
 <script>
-/* ====== SOZLAMALAR ====== */
-const STOCK_SYNC_URL = "https://eshonguzarm34-ee120-default-rtdb.firebaseio.com"; // index.html dagi bilan bir xil bo'lishi shart
-const BOT_TOKEN = "8987526957:AAHTVJYe9r5nXILdieDAIE-QO3DqoHg0dUA"; // index.html dagi bilan bir xil
-const ADMIN_PASSWORD = "eshonguzar2026"; // <-- Xohlasangiz shu parolni o'zgartiring
+const STOCK_SYNC_URL = "https://eshonguzarm34-ee120-default-rtdb.firebaseio.com";
+const BOT_TOKEN = "8987526957:AAHTVJYe9r5nXILdieDAIE-QO3DqoHg0dUA";
+const ADMIN_PASSWORD = "eshonguzar2026";
 
-/* Mahsulotlarning nomi/narxi (rasmsiz, faqat ko'rsatish uchun). index.html dagi PRODUCTS bilan mos bo'lishi kerak. */
-const PRODUCT_NAMES = [{"id":1,"name":"Alyuminiy qozon (5 l)","price":185000,"stock":15,"cat":"oshxona"},{"id":2,"name":"Nonlik laganda to'plami (6 dona)","price":96000,"stock":15,"cat":"oshxona"},{"id":3,"name":"Saqlash idishlari to'plami (5 dona)","price":74000,"stock":15,"cat":"oshxona"},{"id":4,"name":"Uy supurgisi (dastali)","price":34000,"stock":15,"cat":"tozalash"},{"id":5,"name":"Chelak, qopqoqli (12 l)","price":42000,"stock":15,"cat":"tozalash"},{"id":6,"name":"Tozalash latta to'plami (10 dona)","price":28000,"stock":15,"cat":"tozalash"},{"id":7,"name":"Plastik saqlash qutisi (20 l)","price":68000,"stock":15,"cat":"saqlash"},{"id":8,"name":"Kiyim osgichlari to'plami (20 dona)","price":22000,"stock":15,"cat":"saqlash"},{"id":9,"name":"Vakuum paketlar to'plami","price":45000,"stock":15,"cat":"saqlash"},{"id":10,"name":"Bolg'a (500 g)","price":52000,"stock":15,"cat":"asboblar"},{"id":11,"name":"Otvyortka to'plami (12 dona)","price":89000,"stock":15,"cat":"asboblar"},{"id":12,"name":"Plоskogubtsi (burama)","price":47000,"stock":15,"cat":"asboblar"},{"id":13,"name":"O'lchov lentasi (5 m)","price":24000,"stock":15,"cat":"asboblar"},{"id":14,"name":"Elektr drel (600W)","price":420000,"stock":15,"cat":"uskunalar"},{"id":15,"name":"Burg'ilash uchlari to'plami","price":65000,"stock":15,"cat":"uskunalar"},{"id":16,"name":"Bolgarka (kesish mashinasi)","price":580000,"stock":15,"cat":"uskunalar"},{"id":17,"name":"Elektr kabeli (2x1.5, 1m)","price":6500,"stock":15,"cat":"elektr"},{"id":18,"name":"Rozetka (ikki ko'zli)","price":18000,"stock":15,"cat":"elektr"},{"id":19,"name":"Avtomat vyklyuchatel (16A)","price":32000,"stock":15,"cat":"elektr"},{"id":20,"name":"LED lampa (12W)","price":15000,"stock":15,"cat":"yoritish"},{"id":21,"name":"Lyustra (3 shoxli)","price":260000,"stock":15,"cat":"yoritish"},{"id":22,"name":"Projektor yorug'lik (50W)","price":85000,"stock":15,"cat":"yoritish"},{"id":23,"name":"PVX truba (1/2 dyuym, 1m)","price":9000,"stock":15,"cat":"santexnika"},{"id":24,"name":"Kran-buksa (aralashtirgich)","price":95000,"stock":15,"cat":"santexnika"},{"id":25,"name":"Dush shlangi (1.5 m)","price":38000,"stock":15,"cat":"santexnika"},{"id":26,"name":"Elektr isitgich (radiator)","price":340000,"stock":15,"cat":"isitish"},{"id":27,"name":"Konvektor isitgich","price":420000,"stock":15,"cat":"isitish"},{"id":28,"name":"Devor ventilyatori","price":180000,"stock":15,"cat":"ventilyatsiya"},{"id":29,"name":"Stol ventilyatori","price":95000,"stock":15,"cat":"ventilyatsiya"},{"id":30,"name":"Fasad bo'yog'i (3 kg)","price":78000,"stock":15,"cat":"boyoq"},{"id":31,"name":"Emal bo'yoq (1 kg)","price":45000,"stock":15,"cat":"boyoq"},{"id":32,"name":"Lak (paxta uchun, 1 l)","price":52000,"stock":15,"cat":"boyoq"},{"id":33,"name":"Bo'yoq cho'tkasi to'plami","price":24000,"stock":15,"cat":"boyoq"},{"id":34,"name":"Gips karton list (12.5mm)","price":68000,"stock":15,"cat":"pardoz"},{"id":35,"name":"Shpaklyovka (20 kg)","price":54000,"stock":15,"cat":"pardoz"},{"id":36,"name":"Devor qog'ozi (rulon)","price":85000,"stock":15,"cat":"pardoz"},{"id":37,"name":"Sement (50 kg)","price":48000,"stock":15,"cat":"materiallar"},{"id":38,"name":"Qum (1 tonna)","price":220000,"stock":15,"cat":"materiallar"},{"id":39,"name":"G'isht (1 dona)","price":1200,"stock":15,"cat":"materiallar"},{"id":40,"name":"Skotch lenta (qurilish)","price":8500,"stock":15,"cat":"jihozlar"},{"id":41,"name":"Brezent plyonka","price":45000,"stock":15,"cat":"jihozlar"},{"id":42,"name":"Ish qo'lqoplari (5 juft)","price":32000,"stock":15,"cat":"jihozlar"},{"id":43,"name":"Vintlar to'plami (100 dona)","price":18000,"stock":15,"cat":"metizlar"},{"id":44,"name":"Mixlar to'plami (1 kg)","price":22000,"stock":15,"cat":"metizlar"},{"id":45,"name":"Dyubel to'plami (50 dona)","price":15000,"stock":15,"cat":"metizlar"},{"id":46,"name":"Anker murvatlari (10 dona)","price":28000,"stock":15,"cat":"metizlar"},{"id":47,"name":"Qurilish kaskasi","price":38000,"stock":15,"cat":"himoya"},{"id":48,"name":"Himoya ko'zoynagi","price":24000,"stock":15,"cat":"himoya"},{"id":49,"name":"Qurilish kaskasi","price":45000,"stock":15,"cat":"himoya"},{"id":50,"name":"AYUBA S-19 elektr choynagi (2.3 L, 1800W)","price":250000,"stock":15,"cat":"Tajriba"},{"id":51,"name":"Premium keramika-oltin dekor to'plami","price":1850000,"stock":15,"cat":"Tajriba"}];
-const CATEGORIES = [{"id":"oshxona","name":"Oshxona buyumlari","icon":"pan"},{"id":"tozalash","name":"Xo'jalik buyumlari","icon":"broom"},{"id":"saqlash","name":"Buyumlarni saqlash","icon":"box"},{"id":"asboblar","name":"Qurilish asboblari","icon":"hammer"},{"id":"uskunalar","name":"Qurilish uskunalari","icon":"drill"},{"id":"elektr","name":"Elektrika","icon":"plug"},{"id":"yoritish","name":"Yoritish","icon":"bulb"},{"id":"santexnika","name":"Santexnika","icon":"pipe"},{"id":"isitish","name":"Isitish","icon":"heater"},{"id":"ventilyatsiya","name":"Ventilyatsiya","icon":"fan"},{"id":"boyoq","name":"Bo'yoq va lak materiallari","icon":"paintcan"},{"id":"pardoz","name":"Qurilish-pardoz materiallari","icon":"board"},{"id":"materiallar","name":"Qurilish materiallari","icon":"cement"},{"id":"jihozlar","name":"Materiallar va jihozlar","icon":"tape"},{"id":"metizlar","name":"Mahkamlagichlar va armatura","icon":"screw"},{"id":"himoya","name":"Shaxsiy himoya vositalari","icon":"helmet"},{"id":"Tajriba","name":"Tajriba","icon":"box"}];
-
+let customProducts = [];
+const INITIAL_PRODUCTS = [{"id":1,"name":"Alyuminiy qozon (5 l)","price":185000,"stock":15,"cat":"oshxona"},{"id":2,"name":"Nonlik laganda to'plami (6 dona)","price":96000,"stock":15,"cat":"oshxona"},{"id":3,"name":"Saqlash idishlari to'plami (5 dona)","price":74000,"stock":15,"cat":"oshxona"},{"id":4,"name":"Uy supurgisi (dastali)","price":34000,"stock":15,"cat":"tozalash"},{"id":5,"name":"Chelak, qopqoqli (12 l)","price":42000,"stock":15,"cat":"tozalash"},{"id":6,"name":"Tozalash latta to'plami (10 dona)","price":28000,"stock":15,"cat":"tozalash"},{"id":7,"name":"Plastik saqlash qutisi (20 l)","price":68000,"stock":15,"cat":"saqlash"},{"id":8,"name":"Kiyim osgichlari to'plami (20 dona)","price":22000,"stock":15,"cat":"saqlash"},{"id":9,"name":"Vakuum paketlar to'plami","price":45000,"stock":15,"cat":"saqlash"},{"id":10,"name":"Bolg'a (500 g)","price":52000,"stock":15,"cat":"asboblar"},{"id":11,"name":"Otvyortka to'plami (12 dona)","price":89000,"stock":15,"cat":"asboblar"},{"id":12,"name":"Plоskogubtsi (burama)","price":47000,"stock":15,"cat":"asboblar"},{"id":13,"name":"O'lchov lentasi (5 m)","price":24000,"stock":15,"cat":"asboblar"},{"id":14,"name":"Elektr drel (600W)","price":420000,"stock":15,"cat":"uskunalar"},{"id":15,"name":"Burg'ilash uchlari to'plami","price":65000,"stock":15,"cat":"uskunalar"},{"id":16,"name":"Bolgarka (kesish mashinasi)","price":580000,"stock":15,"cat":"uskunalar"},{"id":17,"name":"Elektr kabeli (2x1.5, 1m)","price":6500,"stock":15,"cat":"elektr"},{"id":18,"name":"Rozetka (ikki ko'zli)","price":18000,"stock":15,"cat":"elektr"},{"id":19,"name":"Avtomat vyklyuchatel (16A)","price":32000,"stock":15,"cat":"elektr"},{"id":20,"name":"LED lampa (12W)","price":15000,"stock":15,"cat":"yoritish"},{"id":21,"name":"Lyustra (3 shoxli)","price":260000,"stock":15,"cat":"yoritish"},{"id":22,"name":"Projektor yorug'lik (50W)","price":85000,"stock":15,"cat":"yoritish"},{"id":23,"name":"PVX truba (1/2 dyuym, 1m)","price":9000,"stock":15,"cat":"santexnika"},{"id":24,"name":"Kran-buksa (aralashtirgich)","price":95000,"stock":15,"cat":"santexnika"},{"id":25,"name":"Dush shlangi (1.5 m)","price":38000,"stock":15,"cat":"santexnika"},{"id":26,"name":"Elektr isitgich (radiator)","price":340000,"stock":15,"cat":"isitish"},{"id":27,"name":"Konvektor isitgich","price":420000,"stock":15,"cat":"isitish"},{"id":28,"name":"Devor ventilyatori","price":180000,"stock":15,"cat":"ventilyatsiya"},{"id":29,"name":"Stol ventilyatori","price":95000,"stock":15,"cat":"ventilyatsiya"},{"id":30,"name":"Fasad bo'yog'i (3 kg)","price":78000,"stock":15,"cat":"boyoq"},{"id":31,"name":"Emal bo'yoq (1 kg)","price":45000,"stock":15,"cat":"boyoq"},{"id":32,"name":"Lak (paxta uchun, 1 l)","price":52000,"stock":15,"cat":"boyoq"},{"id":33,"name":"Bo'yoq cho'tkasi to'plami","price":24000,"stock":15,"cat":"boyoq"},{"id":34,"name":"Gips karton list (12.5mm)","price":68000,"stock":15,"cat":"pardoz"},{"id":35,"name":"Shpaklyovka (20 kg)","price":54000,"stock":15,"cat":"pardoz"},{"id":36,"name":"Devor qog'ozi (rulon)","price":85000,"stock":15,"cat":"pardoz"},{"id":37,"name":"Sement (50 kg)","price":48000,"stock":15,"cat":"materiallar"},{"id":38,"name":"Qum (1 tonna)","price":220000,"stock":15,"cat":"materiallar"},{"id":39,"name":"G'isht (1 dona)","price":1200,"stock":15,"cat":"materiallar"},{"id":40,"name":"Skotch lenta (qurilish)","price":8500,"stock":15,"cat":"jihozlar"},{"id":41,"name":"Brezent plyonka","price":45000,"stock":15,"cat":"jihozlar"},{"id":42,"name":"Ish qo'lqoplari (5 juft)","price":32000,"stock":15,"cat":"jihozlar"},{"id":43,"name":"Vintlar to'plami (100 dona)","price":18000,"stock":15,"cat":"metizlar"},{"id":44,"name":"Mixlar to'plami (1 kg)","price":22000,"stock":15,"cat":"metizlar"},{"id":45,"name":"Dyubel to'plami (50 dona)","price":15000,"stock":15,"cat":"metizlar"},{"id":46,"name":"Anker murvatlari (10 dona)","price":28000,"stock":15,"cat":"metizlar"},{"id":47,"name":"Qurilish kaskasi","price":38000,"stock":15,"cat":"himoya"},{"id":48,"name":"Himoya ko'zoynagi","price":24000,"stock":15,"cat":"himoya"},{"id":49,"name":"Qurilish kaskasi","price":45000,"stock":15,"cat":"himoya"},{"id":50,"name":"AYUBA S-19 elektr choynagi (2.3 L, 1800W)","price":250000,"stock":15,"cat":"Tajriba"},{"id":51,"name":"Premium keramika-oltin dekor to'plami","price":1850000,"stock":15,"cat":"Tajriba"}];
+const CATEGORIES = [{"id":"oshxona","name":"Oshxona buyumlari"},{"id":"tozalash","name":"Xo'jalik buyumlari"},{"id":"saqlash","name":"Buyumlarni saqlash"},{"id":"asboblar","name":"Qurilish asboblari"},{"id":"uskunalar","name":"Qurilish uskunalari"},{"id":"elektr","name":"Elektrika"},{"id":"yoritish","name":"Yoritish"},{"id":"santexnika","name":"Santexnika"},{"id":"isitish","name":"Isitish"},{"id":"ventilyatsiya","name":"Ventilyatsiya"},{"id":"boyoq","name":"Bo'yoq va lak materiallari"},{"id":"pardoz","name":"Qurilish-pardoz materiallari"},{"id":"materiallar","name":"Qurilish materiallari"},{"id":"jihozlar","name":"Materiallar va jihozlar"},{"id":"metizlar","name":"Mahkamlagichlar va armatura"},{"id":"himoya","name":"Shaxsiy himoya vositalari"},{"id":"Tajriba","name":"Tajriba"}];
 const STATUS_LABELS = { yangi: "Yangi", jarayonda: "Jarayonda", yetkazildi: "Yetkazildi", bekor: "Bekor qilindi" };
 
-/* ====== LOGIN ====== */
 function tryLogin(){
-  const val = document.getElementById('passInput').value;
-  if(val === ADMIN_PASSWORD){
+  if(document.getElementById('passInput').value === ADMIN_PASSWORD){
     sessionStorage.setItem('admin_ok', '1');
     showApp();
-  } else {
-    document.getElementById('loginErr').style.display = 'block';
-  }
+  } else { document.getElementById('loginErr').style.display = 'block'; }
 }
 function logout(){
   sessionStorage.removeItem('admin_ok');
@@ -268,265 +293,260 @@ function logout(){
 function showApp(){
   document.getElementById('loginScreen').style.display = 'none';
   document.getElementById('app').style.display = 'block';
-  loadDashboard();
-  loadOrders();
-  loadProducts();
-  loadSubsCount();
+  loadDashboard(); loadOrders(); loadProducts(); loadSubsCount();
 }
 document.getElementById('passInput').addEventListener('keydown', e=>{ if(e.key === 'Enter') tryLogin(); });
 if(sessionStorage.getItem('admin_ok') === '1'){ showApp(); }
 
-/* ====== TABS ====== */
 function switchTab(name){
   document.querySelectorAll('nav.tabbar button').forEach(b=>b.classList.toggle('active', b.dataset.tab===name));
   document.querySelectorAll('.panel').forEach(p=>p.classList.toggle('active', p.id==='panel-'+name));
 }
 
-/* ====== HELPERS ====== */
 function formatSom(n){ return Math.round(n).toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ") + " so'm"; }
-function timeAgo(ts){
-  if(!ts) return '';
-  const d = new Date(ts);
-  return d.toLocaleString('uz-UZ', { day:'2-digit', month:'2-digit', year:'numeric', hour:'2-digit', minute:'2-digit' });
-}
-function isSameDay(ts, ref){
-  const a = new Date(ts), b = ref;
-  return a.getFullYear()===b.getFullYear() && a.getMonth()===b.getMonth() && a.getDate()===b.getDate();
-}
-function catName(catId){
-  const c = CATEGORIES.find(c=>c.id===catId);
-  return c ? c.name : catId;
-}
+function timeAgo(ts){ return ts ? new Date(ts).toLocaleString('uz-UZ') : ''; }
+function catName(catId){ const c = CATEGORIES.find(c=>c.id===catId); return c ? c.name : catId; }
 
-/* ====== DASHBOARD ====== */
+/* Dashboard */
 async function loadDashboard(){
   const wrap = document.getElementById('dashboardContent');
   wrap.innerHTML = '<div class="empty">Yuklanmoqda…</div>';
   try{
-    const [ordersRes, stockRes] = await Promise.all([
+    const [oRes, sRes] = await Promise.all([
       fetch(STOCK_SYNC_URL + "/orders.json"),
       fetch(STOCK_SYNC_URL + "/stock.json")
     ]);
-    const orders = (await ordersRes.json()) || {};
-    const stock = (await stockRes.json()) || {};
-    renderDashboard(orders, stock);
-  } catch(e){
-    wrap.innerHTML = '<div class="empty">Yuklab bo\'lmadi. Internetni tekshiring.</div>';
-  }
+    renderDashboard((await oRes.json())||{}, (await sRes.json())||{});
+  } catch(e){ wrap.innerHTML = '<div class="empty">Xatolik yuz berdi.</div>'; }
 }
 function renderDashboard(orders, stock){
-  const wrap = document.getElementById('dashboardContent');
   const list = Object.values(orders);
-  const today = new Date();
-
-  const todayOrders = list.filter(o => o.status !== 'bekor' && isSameDay(o.createdAt, today));
+  const today = new Date().toDateString();
+  const todayOrders = list.filter(o => o.status !== 'bekor' && new Date(o.createdAt).toDateString() === today);
   const todayRevenue = todayOrders.reduce((s,o)=>s+(o.total||0), 0);
-  const totalOrders = list.filter(o=>o.status!=='bekor').length;
-  const newOrders = list.filter(o=>o.status==='yangi' || !o.status).length;
-
-  // Eng ko'p sotilgan mahsulotlar (bekor qilinmagan buyurtmalar bo'yicha)
+  
   const qtyMap = {};
-  list.forEach(o=>{
-    if(o.status==='bekor') return;
-    (o.items||[]).forEach(it=>{
-      qtyMap[it.name] = (qtyMap[it.name]||0) + it.qty;
-    });
-  });
+  list.forEach(o=>{ if(o.status!=='bekor') (o.items||[]).forEach(it=>{ qtyMap[it.name] = (qtyMap[it.name]||0) + it.qty; }); });
   const topProducts = Object.entries(qtyMap).sort((a,b)=>b[1]-a[1]).slice(0,5);
 
-  // Kam qolgan mahsulotlar
-  const lowStock = PRODUCT_NAMES
-    .map(p=>({ name:p.name, stock: stock[p.id]!==undefined ? stock[p.id] : p.stock }))
-    .filter(p=>p.stock<=3)
-    .sort((a,b)=>a.stock-b.stock)
-    .slice(0,6);
-
-  wrap.innerHTML = `
+  document.getElementById('dashboardContent').innerHTML = `
     <div class="stats-grid">
       <div class="stat-card"><div class="label">Bugungi tushum</div><div class="value">${formatSom(todayRevenue)}</div></div>
       <div class="stat-card amber"><div class="label">Bugungi buyurtmalar</div><div class="value">${todayOrders.length}</div></div>
-      <div class="stat-card"><div class="label">Jami buyurtmalar</div><div class="value">${totalOrders}</div></div>
-      <div class="stat-card brick"><div class="label">Yangi (kutilmoqda)</div><div class="value">${newOrders}</div></div>
+      <div class="stat-card"><div class="label">Jami buyurtmalar</div><div class="value">${list.filter(o=>o.status!=='bekor').length}</div></div>
+      <div class="stat-card brick"><div class="label">Kutilayotgan</div><div class="value">${list.filter(o=>o.status==='yangi'||!o.status).length}</div></div>
     </div>
-
     <div class="section-title">Eng ko'p sotilgan mahsulotlar</div>
     <div class="rank-list">
       ${topProducts.length ? topProducts.map(([name,qty],i)=>`
         <div class="rank-row"><span class="rank-num">${i+1}</span><span class="rank-name">${name}</span><span class="rank-qty">${qty} dona</span></div>
-      `).join('') : '<div class="empty">Hali ma\'lumot yo\'q</div>'}
-    </div>
-
-    <div class="section-title">Kam qolgan mahsulotlar</div>
-    <div class="rank-list">
-      ${lowStock.length ? lowStock.map((p,i)=>`
-        <div class="rank-row low-row"><span class="rank-num">!</span><span class="rank-name">${p.name}</span><span class="rank-qty">${p.stock} dona qoldi</span></div>
-      `).join('') : '<div class="empty">Hozircha kam qolgan mahsulot yo\'q</div>'}
+      `).join('') : '<div class="empty">Ma\'lumotlar mavjud emas</div>'}
     </div>
   `;
 }
 
-/* ====== ORDERS ====== */
+/* Orders */
 let ordersCache = {};
 async function loadOrders(){
-  const wrap = document.getElementById('ordersList');
-  wrap.innerHTML = '<div class="empty">Yuklanmoqda…</div>';
   try{
-    const res = await fetch(STOCK_SYNC_URL + "/orders.json");
-    ordersCache = (await res.json()) || {};
+    ordersCache = (await (await fetch(STOCK_SYNC_URL + "/orders.json")).json()) || {};
     renderOrders();
-  } catch(e){
-    wrap.innerHTML = '<div class="empty">Yuklab bo\'lmadi. Internetni tekshiring.</div>';
-  }
+  } catch(e){}
 }
 function renderOrders(){
   const wrap = document.getElementById('ordersList');
-  const keys = Object.keys(ordersCache);
-  if(keys.length === 0){ wrap.innerHTML = '<div class="empty">Hozircha buyurtmalar yo\'q.</div>'; return; }
-  keys.sort((a,b)=> (ordersCache[b].createdAt||0) - (ordersCache[a].createdAt||0));
+  const search = (document.getElementById('orderSearch').value || '').toLowerCase();
+  const statusFilter = document.getElementById('orderStatusFilter').value;
+  
+  let keys = Object.keys(ordersCache).reverse();
+  keys = keys.filter(k=>{
+    const o = ordersCache[k];
+    const st = o.status || 'yangi';
+    const matchSearch = !search || (o.customer?.name||'').toLowerCase().includes(search) || (o.customer?.phone||'').includes(search);
+    const matchStatus = statusFilter === 'all' || st === statusFilter;
+    return matchSearch && matchStatus;
+  });
+
+  if(!keys.length){ wrap.innerHTML = '<div class="empty">Buyurtmalar topilmadi.</div>'; return; }
+
   wrap.innerHTML = keys.map(key=>{
     const o = ordersCache[key];
-    const status = o.status || 'yangi';
-    const cust = o.customer || {};
-    const items = (o.items||[]).map(it=>`<div><span>${it.name} × ${it.qty}</span><span>${formatSom(it.price*it.qty)}</span></div>`).join('');
-    const deliveryLabel = o.delivery === 'delivery' ? "Yetkazib berish" : "O'zi olib ketadi";
-    const paymentLabel = o.payment === 'card' ? "Karta" : "Naqd";
-    const statusButtons = Object.keys(STATUS_LABELS).map(s=>
-      `<button class="${s===status?'current':''}" onclick="setOrderStatus('${key}','${s}')">${STATUS_LABELS[s]}</button>`
-    ).join('');
+    const st = o.status || 'yangi';
     return `
       <div class="order-card">
         <div class="order-top">
-          <div><div class="cust">${cust.name || "Noma'lum"}</div><div class="time">${timeAgo(o.createdAt)}</div></div>
-          <span class="status-badge status-${status}">${STATUS_LABELS[status]||status}</span>
+          <div><div class="cust">${o.customer?.name||"Noma'lum"}</div><div class="time">${timeAgo(o.createdAt)}</div></div>
+          <span class="status-badge status-${st}">${STATUS_LABELS[st]||st}</span>
         </div>
         <div class="order-info">
-          <div>📞 <b>${cust.phone||'—'}</b></div>
-          <div>🚚 ${deliveryLabel} · 💳 ${paymentLabel}</div>
-          ${cust.address ? `<div>📍 ${cust.address}</div>` : ''}
-          ${o.promo ? `<div>🏷️ Promo-kod: <b>${o.promo}</b></div>` : ''}
+          📞 <b>${o.customer?.phone||'—'}</b> | 📍 ${o.customer?.address||'Manzil ko\'rsatilmadi'}
         </div>
-        <div class="order-items">${items}</div>
+        <div class="order-items">
+          ${(o.items||[]).map(i=>`<div><span>${i.name} x ${i.qty}</span><span>${formatSom(i.price*i.qty)}</span></div>`).join('')}
+        </div>
         <div class="order-total">Jami: ${formatSom(o.total||0)}</div>
-        <div class="status-row">${statusButtons}</div>
+        <div class="status-row">
+          ${Object.keys(STATUS_LABELS).map(s=>`
+            <button class="${s===st?'current':''}" onclick="setOrderStatus('${key}','${s}')">${STATUS_LABELS[s]}</button>
+          `).join('')}
+        </div>
       </div>
     `;
   }).join('');
 }
 async function setOrderStatus(key, status){
-  try{
-    await fetch(`${STOCK_SYNC_URL}/orders/${key}/status.json`, {
-      method: "PUT", headers: { "Content-Type": "application/json" }, body: JSON.stringify(status)
-    });
-    ordersCache[key].status = status;
-    renderOrders();
-  } catch(e){ alert("Holatni o'zgartirib bo'lmadi. Internetni tekshiring."); }
+  await fetch(`${STOCK_SYNC_URL}/orders/${key}/status.json`, { method: "PUT", body: JSON.stringify(status) });
+  ordersCache[key].status = status;
+  renderOrders();
 }
 
-/* ====== PRODUCTS ====== */
-let stockCache = {};
-let overridesCache = {};
+/* Products */
+let stockCache = {}, overridesCache = {};
 async function loadProducts(){
-  const wrap = document.getElementById('productsList');
-  wrap.innerHTML = '<div class="empty">Yuklanmoqda…</div>';
   try{
-    const [stockRes, overridesRes] = await Promise.all([
+    const [sRes, oRes, cRes] = await Promise.all([
       fetch(STOCK_SYNC_URL + "/stock.json"),
-      fetch(STOCK_SYNC_URL + "/overrides.json")
+      fetch(STOCK_SYNC_URL + "/overrides.json"),
+      fetch(STOCK_SYNC_URL + "/custom_products.json")
     ]);
-    stockCache = (await stockRes.json()) || {};
-    overridesCache = (await overridesRes.json()) || {};
+    stockCache = (await sRes.json()) || {};
+    overridesCache = (await oRes.json()) || {};
+    customProducts = Object.values((await cRes.json()) || {});
     renderProducts();
-  } catch(e){
-    wrap.innerHTML = '<div class="empty">Yuklab bo\'lmadi. Internetni tekshiring.</div>';
-  }
+  } catch(e){}
 }
+
+function getAllProducts(){
+  return [...INITIAL_PRODUCTS, ...customProducts];
+}
+
 function renderProducts(){
   const wrap = document.getElementById('productsList');
   const q = (document.getElementById('prodSearch').value || '').toLowerCase().trim();
-  const list = PRODUCT_NAMES.filter(p=>!q || p.name.toLowerCase().includes(q));
-  if(list.length===0){ wrap.innerHTML = '<div class="empty">Hech narsa topilmadi.</div>'; return; }
+  const list = getAllProducts().filter(p=>!q || p.name.toLowerCase().includes(q));
+
+  if(!list.length){ wrap.innerHTML = '<div class="empty">Mahsulotlar topilmadi.</div>'; return; }
+
   wrap.innerHTML = list.map(p=>{
-    const stock = stockCache[p.id] !== undefined ? stockCache[p.id] : p.stock;
+    const stock = stockCache[p.id] ?? p.stock;
     const ov = overridesCache[p.id] || {};
-    const price = ov.price !== undefined ? ov.price : p.price;
-    const discount = ov.discount !== undefined ? ov.discount : 0;
-    const lowClass = stock <= 3 ? 'low' : '';
+    const price = ov.price ?? p.price;
+    const discount = ov.discount ?? 0;
     return `
       <div class="prod-card">
         <div class="prod-top">
           <div><div class="prod-name">${p.name}</div><div class="prod-cat">${catName(p.cat)} · ID: ${p.id}</div></div>
         </div>
         <div class="prod-fields">
-          <div class="field"><label>Narx (so'm)</label><input type="number" id="price-${p.id}" value="${price}" min="0" step="500"></div>
-          <div class="field"><label>Chegirma (%)</label><input type="number" id="discount-${p.id}" value="${discount}" min="0" max="90" step="1"></div>
-          <div class="field"><label class="${lowClass}">Zaxira (dona)</label><input type="number" id="stock-${p.id}" value="${stock}" min="0" step="1" class="${lowClass}"></div>
+          <div class="field"><label>Narx (so'm)</label><input type="number" id="price-${p.id}" value="${price}"></div>
+          <div class="field"><label>Chegirma (%)</label><input type="number" id="discount-${p.id}" value="${discount}"></div>
+          <div class="field"><label>Zaxira (dona)</label><input type="number" id="stock-${p.id}" value="${stock}"></div>
         </div>
-        <button class="prod-save" onclick="saveProduct(${p.id})">Saqlash</button>
-        <div class="save-ok" id="ok-${p.id}">✅ Saqlandi</div>
+        <div class="prod-actions">
+          <button class="prod-save" onclick="saveProduct(${p.id})">Saqlash</button>
+          <button class="prod-del" onclick="deleteProduct(${p.id})">O'chirish</button>
+        </div>
       </div>
     `;
   }).join('');
 }
+
 async function saveProduct(id){
-  const price = parseInt(document.getElementById('price-'+id).value, 10) || 0;
-  const discount = parseInt(document.getElementById('discount-'+id).value, 10) || 0;
-  const stock = parseInt(document.getElementById('stock-'+id).value, 10) || 0;
-  try{
-    await Promise.all([
-      fetch(`${STOCK_SYNC_URL}/stock/${id}.json`, { method: "PUT", headers: {"Content-Type":"application/json"}, body: JSON.stringify(stock) }),
-      fetch(`${STOCK_SYNC_URL}/overrides/${id}.json`, { method: "PUT", headers: {"Content-Type":"application/json"}, body: JSON.stringify({price, discount}) })
-    ]);
-    stockCache[id] = stock;
-    overridesCache[id] = { price, discount };
-    const ok = document.getElementById('ok-'+id);
-    ok.style.display = 'block';
-    setTimeout(()=>{ ok.style.display = 'none'; }, 1800);
-  } catch(e){ alert("Saqlab bo'lmadi. Internetni tekshiring."); }
+  const price = parseInt(document.getElementById('price-'+id).value) || 0;
+  const discount = parseInt(document.getElementById('discount-'+id).value) || 0;
+  const stock = parseInt(document.getElementById('stock-'+id).value) || 0;
+
+  await Promise.all([
+    fetch(`${STOCK_SYNC_URL}/stock/${id}.json`, { method: "PUT", body: JSON.stringify(stock) }),
+    fetch(`${STOCK_SYNC_URL}/overrides/${id}.json`, { method: "PUT", body: JSON.stringify({price, discount}) })
+  ]);
+  alert("Saqlandi!");
 }
 
-/* ====== BROADCAST (Bot xabarlari) ====== */
+async function deleteProduct(id){
+  if(!confirm("Haqiqatan ham ushbu mahsulotni o'chirmoqchimisiz?")) return;
+  await fetch(`${STOCK_SYNC_URL}/custom_products/${id}.json`, { method: "DELETE" });
+  customProducts = customProducts.filter(p => p.id !== id);
+  renderProducts();
+}
+
+function openAddProductModal(){
+  const select = document.getElementById('newProdCat');
+  select.innerHTML = CATEGORIES.map(c=>`<option value="${c.id}">${c.name}</option>`).join('');
+  document.getElementById('addProductModal').style.display = 'flex';
+}
+function closeAddProductModal(){ document.getElementById('addProductModal').style.display = 'none'; }
+
+async function saveNewProduct(){
+  const name = document.getElementById('newProdName').value.trim();
+  const cat = document.getElementById('newProdCat').value;
+  const price = parseInt(document.getElementById('newProdPrice').value) || 0;
+  const stock = parseInt(document.getElementById('newProdStock').value) || 0;
+
+  if(!name || !price) return alert("Barcha maydonlarni to'ldiring");
+
+  const id = Date.now();
+  const newProd = { id, name, cat, price, stock };
+
+  await fetch(`${STOCK_SYNC_URL}/custom_products/${id}.json`, { method: "PUT", body: JSON.stringify(newProd) });
+  customProducts.push(newProd);
+  closeAddProductModal();
+  renderProducts();
+}
+
+/* Broadcast */
 let usersCache = {};
 async function loadSubsCount(){
   try{
-    const res = await fetch(STOCK_SYNC_URL + "/users.json");
-    usersCache = (await res.json()) || {};
+    usersCache = (await (await fetch(STOCK_SYNC_URL + "/users.json")).json()) || {};
     document.getElementById('subsCount').textContent = Object.keys(usersCache).length;
-  } catch(e){
-    document.getElementById('subsCount').textContent = '—';
-  }
+  } catch(e){}
 }
+
 async function sendBroadcast(){
   const text = document.getElementById('broadcastText').value.trim();
-  const resultEl = document.getElementById('broadcastResult');
-  resultEl.className = 'broadcast-result';
-  if(!text){ alert("Xabar matnini kiriting"); return; }
+  const photo = document.getElementById('broadcastImg').value.trim();
+  const btnText = document.getElementById('broadcastBtnText').value.trim();
+  const btnUrl = document.getElementById('broadcastBtnUrl').value.trim();
+  
+  if(!text) return alert("Xabar matnini kiriting!");
+  
   const ids = Object.keys(usersCache);
-  if(ids.length === 0){
-    resultEl.textContent = "Ro'yxatda hali hech kim yo'q — mijozlar ilovani ochgach, ro'yxat to'ladi.";
-    resultEl.classList.add('err');
-    return;
-  }
+  if(!ids.length) return alert("Mijozlar ro'yxati bo'sh.");
   if(!confirm(`Xabar ${ids.length} ta mijozga yuboriladi. Tasdiqlaysizmi?`)) return;
 
   const btn = document.getElementById('broadcastBtn');
-  btn.disabled = true;
-  btn.textContent = "Yuborilmoqda...";
-  let sent = 0, failed = 0;
+  btn.disabled = true; btn.textContent = "Yuborilmoqda...";
+
+  let sent = 0;
   for(const id of ids){
     try{
-      const res = await fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`, {
+      const payload = { chat_id: id };
+      let endpoint = 'sendMessage';
+
+      if(photo){
+        endpoint = 'sendPhoto';
+        payload.photo = photo;
+        payload.caption = text;
+      } else {
+        payload.text = text;
+      }
+
+      if(btnText && btnUrl){
+        payload.reply_markup = { inline_keyboard: [[{ text: btnText, url: btnUrl }]] };
+      }
+
+      const res = await fetch(`https://api.telegram.org/bot${BOT_TOKEN}/${endpoint}`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ chat_id: id, text })
+        body: JSON.stringify(payload)
       });
-      const data = await res.json();
-      if(data.ok) sent++; else failed++;
-    } catch(e){ failed++; }
+      if((await res.json()).ok) sent++;
+    } catch(e){}
   }
-  btn.disabled = false;
-  btn.textContent = "Hammaga yuborish";
-  resultEl.textContent = `✅ ${sent} ta mijozga yuborildi` + (failed ? `, ${failed} ta muvaffaqiyatsiz (ehtimol botni bloklashgan)` : '');
-  resultEl.classList.add(sent>0 ? 'ok' : 'err');
+
+  btn.disabled = false; btn.textContent = "Hammaga yuborish";
+  document.getElementById('broadcastResult').innerHTML = `<b style="color:var(--green)">✅ ${sent} ta mijozga yuborildi.</b>`;
 }
 </script>
 </body>
